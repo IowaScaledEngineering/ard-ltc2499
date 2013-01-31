@@ -6,7 +6,7 @@ FileVersion[20070407]
 PCB["" 210000 270000]
 
 Grid[500.0 0 0 0]
-Cursor[500 3000 0.000000]
+Cursor[32000 31000 0.000000]
 PolyArea[200000000.000000]
 Thermal[0.500000]
 DRC[800 800 800 1000 2000 800]
@@ -920,7 +920,7 @@ Element["hidename" "ARDUINO_SHIELD_HOLE" "H4" "unknown" 30000 260000 0 10000 0 1
 
 	)
 
-Element["" "SOT26" "U4" "unknown" 165500 105000 -16500 4200 0 100 ""]
+Element["" "SOT26" "U4" "unknown" 165500 105000 -17500 4200 0 100 ""]
 (
 	Pad[0 -800 0 800 2400 3000 3000 "SCL" "1" "square"]
 	Pad[-3900 -800 -3900 800 2400 3000 3000 "GND" "2" "square"]
