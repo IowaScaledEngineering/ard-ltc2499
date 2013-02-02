@@ -6,7 +6,7 @@ FileVersion[20070407]
 PCB["" 210000 270000]
 
 Grid[500.0 0 0 0]
-Cursor[0 0 0.000000]
+Cursor[1000 73500 0.000000]
 PolyArea[200000000.000000]
 Thermal[0.500000]
 DRC[800 800 800 1000 2000 800]
@@ -1562,6 +1562,7 @@ Layer(2 "solder")
 	Line[140000 172000 170000 172000 2000 2000 "clearline"]
 	Line[155000 172000 155000 156500 1000 2000 "clearline"]
 	Line[178000 136000 129000 136000 2000 2000 ""]
+	Line[97500 23000 97500 37500 2000 2000 ""]
 	Polygon("clearpoly")
 	(
 		[4500 155000] [22500 155000] [22500 175000] [4500 175000] 
@@ -1723,6 +1724,7 @@ NetList()
 		Connect("C7-2")
 		Connect("J1-6")
 		Connect("J1-7")
+		Connect("J3-2")
 		Connect("JP4-3")
 		Connect("JP5-3")
 		Connect("JP6-3")
@@ -1731,6 +1733,7 @@ NetList()
 		Connect("U1-1")
 		Connect("U1-4")
 		Connect("U1-6")
+		Connect("U1-7")
 		Connect("U1-30")
 		Connect("U1-31")
 		Connect("U1-32")
@@ -1896,32 +1899,27 @@ NetList()
 	)
 	Net("unnamed_net28" "(unknown)")
 	(
-		Connect("J3-2")
-		Connect("U1-7")
-	)
-	Net("unnamed_net29" "(unknown)")
-	(
 		Connect("U1-26")
 		Connect("U1-27")
 	)
-	Net("unnamed_net30" "(unknown)")
+	Net("unnamed_net29" "(unknown)")
 	(
 		Connect("U1-24")
 		Connect("U1-25")
 	)
-	Net("unnamed_net31" "(unknown)")
+	Net("unnamed_net30" "(unknown)")
 	(
 		Connect("C6-1")
 		Connect("JP3-3")
 		Connect("U3-1")
 	)
-	Net("unnamed_net32" "(unknown)")
+	Net("unnamed_net31" "(unknown)")
 	(
 		Connect("JP7-1")
 		Connect("R3-1")
 		Connect("U4-5")
 	)
-	Net("unnamed_net33" "(unknown)")
+	Net("unnamed_net32" "(unknown)")
 	(
 		Connect("JP8-1")
 		Connect("R4-1")
