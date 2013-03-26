@@ -99,7 +99,6 @@ long Ard2499::ltc2499ReadAndChangeChannel(byte nextChannel)
 	return(ltc2499Read());
 }
 
-
 unsigned long Ard2499::ltc2499ReadRaw()
 {
 	unsigned long retval=0;
@@ -167,8 +166,16 @@ float Ard2499::ltc2499ReadTemperature(Ard2499TemperatureUnits temperatureUnits)
 
 unsigned int Ard2499::ltc2499ReadTemperatureDeciK()
 {
-	unsigned long readVal = ltc2499ReadRaw();
+	unsigned long readVal = 0;
 	unsigned int tempDK = 0;
+	
+	// If we're currently not set for the temperature channel, switch us over
+	// If we are currently set for the temp channel, then that write will have
+	// triggered a conversion, and ltc2499ReadRaw will block until it's done
+	if(LTC2499_CHAN_TEMPERATURE != current2499Channel)
+		ltc2499ChangeChannel(LTC2499_CHAN_TEMPERATURE, true);
+	
+	readVal = ltc2499ReadRaw();
 	
 	if (LTC2499_RAW_READ_ERROR == readVal)
 		return(0);
