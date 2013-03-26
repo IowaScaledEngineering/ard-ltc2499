@@ -36,7 +36,9 @@ LICENSE:
 #include <stdlib.h>
 #include <string.h>
 #include <avr/io.h>
-#include <Wire.h>
+#include "Arduino.h"
+#include "Wire.h"
+
 
 #define FAKE_CONFIG1_TEMPERATURE   6
 #define LTC2499_CONFIG1_ENABLE     5
@@ -95,140 +97,69 @@ LICENSE:
 #define LTC2499_CONFIG2_60_50HZ_REJ (0)  
 #define LTC2499_CONFIG2_SPEED_2X    (_BV(LTC2499_CONFIG2_SPD))
 
-class Ard2499
-{
-	public:
-		void Ard2499();
-		void begin(byte ltc2499Address, byte eepromAddress);
-		const char* eui48Get();
-		byte eepromRead(byte address);
-		byte eepromWrite(byte address, byte blocking=0);
-		unsigned long ltc2499Read();
-		byte ltc2499ChangeChannel(byte channel);
-		byte ltc2499ChangeConfiguration(byte config);
-		unsigned int ltc2499ReadTemperatureK();
-	private:
-		byte i2cAddr_ltc2499;
-		byte i2cAddr_eeprom;
-		byte current2499Config;
-		byte current2499Channel;
-		char eui48[6*2+1];
-
-};
-
-#define LTC2499_READERROR 0xFFFFFFFF
-
-unsigned long Ard2499::ltc2499Read()
-{
-	unsigned long retval=0;
-	Wire.requestFrom(ltc2499Address, 4);
-	// Error occurred, we don't have as many bytes as expected
-	if (Wire.available() < 4)
-		return(LTC2499_READERROR);
-
-	retval |= Wire.read();
-	retval <<= 8;
-	retval |= Wire.read();
-	retval <<= 8;
-	retval |= Wire.read();
-	retval <<= 8;
-	retval |= Wire.read();
-
-	return(retval);
-}
-
-unsigned int Ard2499::ltc2499ReadTemperatureK()
-{
-	unsigned long readVal = ltc2499Read();
-	unsigned int tempK = 0;
-	
-	if (LTC2499_READERROR == readVal)
-		return(0);
-
-	// Throw away the sub-LSBs
-	tempK = ((0x00FFFFFF & (readVal>>6)) * 4096) / 1570000;
-	return(tempK);
-}
 #define ARD2499_INIT_SUCCESS      0
 #define ARD2499_INIT_LTC2499_ERR  1
 #define ARD2499_INIT_EEPROM_ERR   2
 
 #define ARD2499_EEPROM_ADDR_EUI48  0xFA
 
-byte Ard2499::begin(byte ltc2499Address, byte eepromAddress)
+#define ARD2499_EEP_ADDR_ZZ 0x53
+#define ARD2499_EEP_ADDR_0Z 0x54
+#define ARD2499_EEP_ADDR_Z0 0x55
+#define ARD2499_EEP_ADDR_00 0x56
+
+#define ARD2499_ADC_ADDR_000   0x14
+#define ARD2499_ADC_ADDR_00Z   0x15
+#define ARD2499_ADC_ADDR_001   0x16
+#define ARD2499_ADC_ADDR_0Z0   0x17
+#define ARD2499_ADC_ADDR_0ZZ   0x24
+#define ARD2499_ADC_ADDR_0Z1   0x25
+#define ARD2499_ADC_ADDR_010   0x26
+#define ARD2499_ADC_ADDR_01Z   0x27
+#define ARD2499_ADC_ADDR_011   0x28
+#define ARD2499_ADC_ADDR_Z00   0x35
+#define ARD2499_ADC_ADDR_Z01   0x37
+#define ARD2499_ADC_ADDR_Z0Z   0x36
+#define ARD2499_ADC_ADDR_ZZ0   0x44
+#define ARD2499_ADC_ADDR_ZZZ   0x45
+#define ARD2499_ADC_ADDR_ZZ1   0x46
+#define ARD2499_ADC_ADDR_Z10   0x47
+#define ARD2499_ADC_ADDR_Z1Z   0x54
+#define ARD2499_ADC_ADDR_Z11   0x55
+#define ARD2499_ADC_ADDR_100   0x56
+#define ARD2499_ADC_ADDR_10Z   0x57
+#define ARD2499_ADC_ADDR_101   0x64
+#define ARD2499_ADC_ADDR_1Z0   0x65
+#define ARD2499_ADC_ADDR_1ZZ   0x66
+#define ARD2499_ADC_ADDR_1Z1   0x67
+#define ARD2499_ADC_ADDR_110   0x74
+#define ARD2499_ADC_ADDR_111   0x76
+#define ARD2499_ADC_ADDR_11Z   0x75
+
+class Ard2499
 {
-	byte retval = 0;
-	byte i;
-	
-	memset(eui48, 0, sizeof(eui48));
-	
-	i2cAddr_ltc2499 = ltc2499Address;
-	current2499Channel = LTC2499_CHAN_DIFF_0P_1N;
-	current2499Config = LTC2499_CONFIG2_60_50HZ_REJ;
-	
-	Wire.beginTransmission(i2cAddr_ltc2499);
-	Wire.write(0x80 | _BV(LTC2499_CONFIG1_ENABLE) | (0x1F & current2499Channel));
-	Wire.write(_BV(LTC2499_CONFIG2_ENABLE) | (0x7F & current2499Config));
-	retval = Wire.endTransmission(true);
-	// Anything but zero means we couldn't initialize the LTC2499
-	if (0 != retval)
-		return(ARD2499_INIT_LTC2499_ERR);
+	public:
+		Ard2499();
+		byte begin(byte ltc2499Address, byte eepromAddress);
+		const char* eui48Get();
+		byte eepromRead(byte address);
+		byte eepromWrite(byte address, byte value, byte blocking);
+		unsigned long ltc2499Read();
+		byte ltc2499ChangeChannel(byte channel);
+		byte ltc2499ChangeConfiguration(byte config);
+		unsigned int ltc2499ReadTemperatureK();
+	private:
+		uint8_t init_status;
+		uint8_t i2cAddr_ltc2499;
+		uint8_t i2cAddr_eeprom;
+		uint8_t current2499Config;
+		uint8_t current2499Channel;
+		char eui48[6*2+1];
 
-	i2cAddr_eeprom = eepromAddress;
+};
 
-	Wire.beginTransmission(i2cAddr_eeprom);
-	Wire.write(ARD2499_EEPROM_ADDR_EUI48);
-	retval = Wire.endTransmission(false);
-	// Anything but zero means we couldn't initialize the LTC2499
-	if (0 != retval)
-	{
-		// Make sure we send a stop bit
-		Wire.endTransmission(true);
-		return(ARD2499_INIT_EEPROM_ERR);
-	}
+#define LTC2499_READERROR 0xFFFFFFFF
 
-	Wire.requestFrom(i2cAddr_eeprom, 6, true);
-	if (Wire.available() < 6)
-		return(ARD2499_INIT_EEPROM_ERR);
-	
-	for(i=0; i<12; i+=2)
-		sprintf(&eui48[i], "%02X", Wire.read());
-		
-	return(ARD2499_INIT_SUCCESS);
-}
-
-byte Ard2499::eepromRead(byte address)
-{
-	Wire.beginTransmission(i2cAddr_eeprom);
-	Wire.write(address);
-	retval = Wire.endTransmission(false);
-	// Anything but zero means we couldn't initialize the LTC2499
-	if (0 != retval)
-	{
-		// Make sure we send a stop bit
-		Wire.endTransmission(true);
-		return(ARD2499_INIT_EEPROM_ERR);
-	}
-
-	Wire.requestFrom(i2cAddr_eeprom, 1, true);
-	if (Wire.available() < 1)
-		return(0);
-	return(Wire.read());
-}
-
-byte Ard2499::ltc2499ChangeChannel(byte channel)
-{
-	if (
-
-	return(channel);
-}
-
-byte Ard2499::ltc2499ChangeConfiguration(byte config)
-{
-	return(config);	
-}
-
-
-#endif // MRBUS_AVR_H
+#endif // ARD2499_H
 
 
