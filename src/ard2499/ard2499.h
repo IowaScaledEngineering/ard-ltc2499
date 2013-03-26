@@ -97,9 +97,13 @@ LICENSE:
 #define LTC2499_CONFIG2_60_50HZ_REJ (0)  
 #define LTC2499_CONFIG2_SPEED_2X    (_BV(LTC2499_CONFIG2_SPD))
 
-#define ARD2499_INIT_SUCCESS      0
-#define ARD2499_INIT_LTC2499_ERR  1
-#define ARD2499_INIT_EEPROM_ERR   2
+#define LTC2499_CONFIG1_CHANBITS (_BV(LTC2499_CONFIG1_SINGLE_END) | _BV(LTC2499_CONFIG1_ODD) | _BV(LTC2499_CONFIG1_A2) | _BV(LTC2499_CONFIG1_A1) | _BV(LTC2499_CONFIG1_A0))
+#define LTC2499_CONFIG2_CONFBITS (_BV(LTC2499_CONFIG2_FA) & _BV(LTC2499_CONFIG2_FB) & _BV(LTC2499_CONFIG2_SPD))
+
+
+#define ARD2499_SUCCESS      0
+#define ARD2499_LTC2499_ERR  1
+#define ARD2499_EEPROM_ERR   2
 
 #define ARD2499_EEPROM_ADDR_EUI48  0xFA
 
@@ -136,19 +140,39 @@ LICENSE:
 #define ARD2499_ADC_ADDR_111   0x76
 #define ARD2499_ADC_ADDR_11Z   0x75
 
+#define ARD2499_TEMP_DEG_F     0x01
+
+typedef enum
+{
+	ARD2499_TEMP_K              = 0x00,
+	ARD2499_TEMP_F              = 0x01,
+	ARD2499_TEMP_C              = 0x02
+} Ard2499TemperatureUnits;
+
 class Ard2499
 {
 	public:
 		Ard2499();
 		byte begin(byte ltc2499Address, byte eepromAddress);
+
 		const char* eui48Get();
-		byte eepromRead(byte address);
+		byte eepromRead(int address, byte defaultOnError);
+		byte eepromRead(byte address, byte defaultOnError);
+		byte eepromWrite(int address, byte value, byte blocking);
 		byte eepromWrite(byte address, byte value, byte blocking);
-		unsigned long ltc2499Read();
+
+		long ltc2499Read();
+		long ltc2499ReadAndChangeChannel(byte nextChannel);
+
+		unsigned long ltc2499ReadRaw();
+		unsigned long ltc2499ReadRawAndChangeChannel(byte nextChannel);	
+		
 		byte ltc2499ChangeChannel(byte channel);
 		byte ltc2499ChangeConfiguration(byte config);
-		unsigned int ltc2499ReadTemperatureK();
+		unsigned int ltc2499ReadTemperatureDeciK();
+		float ltc2499ReadTemperature(Ard2499TemperatureUnits temperatureUnits);
 	private:
+		byte ltc2499ChangeChannel(byte channel, bool addStop);
 		uint8_t init_status;
 		uint8_t i2cAddr_ltc2499;
 		uint8_t i2cAddr_eeprom;
@@ -158,7 +182,13 @@ class Ard2499
 
 };
 
-#define LTC2499_READERROR 0xFFFFFFFF
+#define LTC2499_RAW_READ_ERROR     0xFFFFFFFF
+
+#define LTC2499_READ_ERROR         0x01000001
+
+#define LTC2499_OVERRANGE_POSITIVE 0x01000000
+#define LTC2499_OVERRANGE_NEGATIVE 0x11000000
+
 
 #endif // ARD2499_H
 
