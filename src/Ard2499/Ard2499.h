@@ -107,10 +107,10 @@ LICENSE:
 
 #define ARD2499_EEPROM_ADDR_EUI48  0xFA
 
+#define ARD2499_EEP_ADDR_00 0x50
+#define ARD2499_EEP_ADDR_0Z 0x51
+#define ARD2499_EEP_ADDR_Z0 0x52
 #define ARD2499_EEP_ADDR_ZZ 0x53
-#define ARD2499_EEP_ADDR_0Z 0x54
-#define ARD2499_EEP_ADDR_Z0 0x55
-#define ARD2499_EEP_ADDR_00 0x56
 
 #define ARD2499_ADC_ADDR_000   0x14
 #define ARD2499_ADC_ADDR_00Z   0x15
@@ -142,12 +142,9 @@ LICENSE:
 
 #define ARD2499_TEMP_DEG_F     0x01
 
-typedef enum
-{
-	ARD2499_TEMP_K              = 0x00,
-	ARD2499_TEMP_F              = 0x01,
-	ARD2499_TEMP_C              = 0x02
-} Ard2499TemperatureUnits;
+#define	ARD2499_TEMP_K        0x00
+#define  ARD2499_TEMP_F        0x01
+#define  ARD2499_TEMP_C        0x02
 
 class Ard2499
 {
@@ -157,9 +154,7 @@ class Ard2499
 
 		const char* eui48Get();
 		byte eepromRead(int address, byte defaultOnError);
-		byte eepromRead(byte address, byte defaultOnError);
 		byte eepromWrite(int address, byte value, byte blocking);
-		byte eepromWrite(byte address, byte value, byte blocking);
 
 		long ltc2499Read();
 		long ltc2499ReadAndChangeChannel(byte nextChannel);
@@ -170,7 +165,7 @@ class Ard2499
 		byte ltc2499ChangeChannel(byte channel);
 		byte ltc2499ChangeConfiguration(byte config);
 		unsigned int ltc2499ReadTemperatureDeciK();
-		float ltc2499ReadTemperature(Ard2499TemperatureUnits temperatureUnits);
+		float ltc2499ReadTemperature(byte temperatureUnits);
 	private:
 		byte ltc2499ChangeChannel(byte channel, bool addStop);
 		uint8_t init_status;

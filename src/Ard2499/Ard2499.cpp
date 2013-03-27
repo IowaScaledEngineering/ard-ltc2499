@@ -5,7 +5,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-#include "ard2499.h"
+#include "Ard2499.h"
 
 byte Ard2499::ltc2499ChangeChannel(byte channel)
 {
@@ -148,7 +148,7 @@ unsigned long Ard2499::ltc2499ReadRawAndChangeChannel(byte nextChannel)
 	return(ltc2499ReadRaw());
 }
 
-float Ard2499::ltc2499ReadTemperature(Ard2499TemperatureUnits temperatureUnits)
+float Ard2499::ltc2499ReadTemperature(byte temperatureUnits)
 {
 	unsigned int tempDK = ltc2499ReadTemperatureDeciK();
 	float tempK = (float)tempDK/10.0;
@@ -258,14 +258,14 @@ byte Ard2499::begin(byte ltc2499Address, byte eepromAddress)
 
 byte Ard2499::eepromRead(int address, byte defaultOnError=0)
 {
-	return(eepromRead((byte)address, defaultOnError));
-}
-
-byte Ard2499::eepromRead(byte address, byte defaultOnError=0)
-{
 	byte retval = 0;
+	
+	// Our address range only goes to 0xFF
+	if (address > 0xFF)
+		return(defaultOnError);
+	
 	Wire.beginTransmission(i2cAddr_eeprom);
-	Wire.write(address);
+	Wire.write((uint8_t)address);
 	retval = Wire.endTransmission(false);
 	// Anything but zero means we couldn't initialize the LTC2499
 	if (0 != retval)
@@ -281,11 +281,15 @@ byte Ard2499::eepromRead(byte address, byte defaultOnError=0)
 	return(Wire.read());
 }
 
-byte Ard2499::eepromWrite(byte address, byte value, byte blocking=1)
+byte Ard2499::eepromWrite(int address, byte value, byte blocking=1)
 {
 	uint8_t waitLoop = 10;
 	byte retval = 0;
 	if (0 == i2cAddr_eeprom)
+		return(ARD2499_EEPROM_ERR);
+
+	// Our writable address range only goes to 0xFF
+	if (address > 0x7F)
 		return(ARD2499_EEPROM_ERR);
 		
 	Wire.beginTransmission(i2cAddr_eeprom);
@@ -310,7 +314,7 @@ byte Ard2499::eepromWrite(byte address, byte value, byte blocking=1)
 		}
 		return(ARD2499_EEPROM_ERR);
 	}
-	return(0);
+	return(ARD2499_SUCCESS);
 }
 
 
