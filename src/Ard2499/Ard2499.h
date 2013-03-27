@@ -1,34 +1,22 @@
 /*************************************************************************
-Title:    MRBus Arduino Library Header
-Authors:  Nathan Holmes <maverick@drgw.net>, Colorado, USA
-          Michael Petersen <railfan@drgw.net>, Colorado, USA
-          Michael Prader, South Tyrol, Italy
-File:     mrbus-avr.h
+Title:    ARD-LTC2499 Driver Library
+Authors:  Nathan D. Holmes <maverick@drgw.net>
+File:     $Id: $
 License:  GNU General Public License v3
 
 LICENSE:
-    Copyright (C) 2012 Nathan Holmes, Michael Petersen, and Michael Prader
-
-    Original MRBus code developed by Nathan Holmes for PIC architecture.
-    This file is based on AVR port by Michael Prader.  Updates and
-    compatibility fixes by Michael Petersen.
-    
-    UART code derived from AVR UART library by Peter Fleury, and as
-    modified by Tim Sharpe.
+    Copyright (C) 2013 Nathan D. Holmes & Michael D. Petersen
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License, or
+    the Free Software Foundation; either version 2 of the License, or
     any later version.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-    
-    You should have received a copy of the GNU General Public License along
-    with this program. If not, see http://www.gnu.org/licenses/
-    
+
 *************************************************************************/
 #ifndef ARD2499_H
 #define ARD2499_H
@@ -146,6 +134,13 @@ LICENSE:
 #define  ARD2499_TEMP_F        0x01
 #define  ARD2499_TEMP_C        0x02
 
+#define LTC2499_RAW_READ_ERROR     0xFFFFFFFF
+
+#define LTC2499_READ_ERROR         0x01000001
+#define LTC2499_OVERRANGE_POSITIVE 0x01000000
+#define LTC2499_OVERRANGE_NEGATIVE 0x11000000
+
+
 class Ard2499
 {
 	public:
@@ -174,16 +169,7 @@ class Ard2499
 		uint8_t current2499Config;
 		uint8_t current2499Channel;
 		char eui48[6*2+1];
-
 };
-
-#define LTC2499_RAW_READ_ERROR     0xFFFFFFFF
-
-#define LTC2499_READ_ERROR         0x01000001
-
-#define LTC2499_OVERRANGE_POSITIVE 0x01000000
-#define LTC2499_OVERRANGE_NEGATIVE 0x11000000
-
 
 #endif // ARD2499_H
 
