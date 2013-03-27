@@ -1,3 +1,24 @@
+/*************************************************************************
+Title:    ARD-LTC2499 Library Example Arduino Sketch
+Authors:  Nathan D. Holmes <maverick@drgw.net>
+File:     $Id: $
+License:  GNU General Public License v3
+
+LICENSE:
+    Copyright (C) 2013 Nathan D. Holmes & Michael D. Petersen
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+*************************************************************************/
+
 #include <Wire.h>
 #include <Ard2499.h>
 
@@ -13,6 +34,7 @@ void setup() {
   ard2499board1.ltc2499ChangeConfiguration(LTC2499_CONFIG2_60_50HZ_REJ);
   confChan = ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_TEMPERATURE);
 }
+
 byte i=0;
 
 void loop() {
