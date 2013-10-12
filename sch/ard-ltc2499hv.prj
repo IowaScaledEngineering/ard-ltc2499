@@ -1,0 +1,6 @@
+schematics ard-ltc2499hv.sch
+output-name ../pcb/ard-ltc2499hv
+skip-m4
+elements-dir ../../footprints
+
+
