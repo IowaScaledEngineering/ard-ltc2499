@@ -20,7 +20,9 @@ LICENSE:
 *************************************************************************/
 
 #define LOG_INTERVAL 10
-#define TEMPERATURE_ALARM 50.0
+#define TEMPERATURE_ALARM 190.0
+
+#define ALARM_PIN 7
 
 #include <Wire.h>
 #include <Ard2499.h>
@@ -80,6 +82,9 @@ void setup()
   Serial.print((char)0x40);
   Serial.print((char)0x02);
   Serial.print((char)0x02);
+
+  // Configure Alarm pin
+  pinMode(ALARM_PIN, OUTPUT);
 
   // Configure SD card chip select
   pinMode(chipSelectSD, OUTPUT);
@@ -171,10 +176,12 @@ void loop() {
   if(T > TEMPERATURE_ALARM)
   {
     blinky ^= 1;
+    digitalWrite(ALARM_PIN, HIGH);
   }
   else
   {
     blinky = 0;
+    digitalWrite(ALARM_PIN, LOW);
   }
   
   // Print to VFD display
