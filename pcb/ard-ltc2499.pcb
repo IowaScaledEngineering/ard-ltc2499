@@ -6,7 +6,7 @@ FileVersion[20070407]
 PCB["" 210000 270000]
 
 Grid[500.0 0 0 0]
-Cursor[1000 73500 0.000000]
+Cursor[44500 6000 0.000000]
 PolyArea[200000000.000000]
 Thermal[0.500000]
 DRC[800 800 800 1000 2000 800]
@@ -1202,7 +1202,7 @@ Element["" "0805" "R4" "10k" 147500 149500 -14193 -3150 0 100 ""]
 
 Element["" "tantalum_a" "C2" "22uF" 121500 134500 -18000 -3100 0 100 ""]
 (
-	Pad[-5000 -1800 -5000 1800 4900 0 5500 "1" "1" "square"]
+	Pad[-5000 -1800 -5000 1800 4900 0 5500 "+" "1" "square"]
 	Pad[5000 -1800 5000 1800 4900 0 5500 "2" "2" "square"]
 	ElementLine [-9600 -4300 -9600 4300 2000]
 	ElementLine [-9600 4300 -7200 5500 1000]
@@ -1294,6 +1294,24 @@ Element["" "0805" "C7" "0.1uF" 175500 109000 -3000 7000 0 100 ""]
 	Pad[-393 -3543 393 -3543 5118 2000 5718 "2" "2" "square"]
 	ElementLine [-2755 -393 -2755 393 1000]
 	ElementLine [2755 -393 2755 393 1000]
+
+	)
+
+Element["" "1206" "D1" "unknown" 157500 226000 10350 -3150 0 100 ""]
+(
+	Pad[-5905 -1181 -5905 1181 5118 2000 5718 "CATHODE" "1" "square"]
+	Pad[5905 -1181 5905 1181 5118 2000 5718 "ANODE" "2" "square"]
+	ElementLine [-2362 -3740 2362 -3740 1000]
+	ElementLine [-2362 3740 2362 3740 1000]
+
+	)
+
+Element["" "0805" "R5" "330" 157500 213000 8350 -3150 0 100 ""]
+(
+	Pad[3543 -393 3543 393 5118 2000 5718 "1" "1" "square"]
+	Pad[-3543 -393 -3543 393 5118 2000 5718 "2" "2" "square"]
+	ElementLine [-393 2755 393 2755 1000]
+	ElementLine [-393 -2755 393 -2755 1000]
 
 	)
 Layer(1 "component")
@@ -1487,6 +1505,20 @@ Layer(1 "component")
 	Line[86614 108031 81031 108031 1000 2000 "clearline"]
 	Line[9000 36000 9000 23000 1000 2000 "clearline"]
 	Line[81031 108031 9000 36000 1000 2000 "clearline"]
+	Line[163405 226000 163405 215362 1000 2000 "clearline"]
+	Line[163405 215362 161043 213000 1000 2000 "clearline"]
+	Line[140000 172000 140000 174500 1000 2000 "clearline"]
+	Line[140000 174500 132500 182000 1000 2000 "clearline"]
+	Line[132500 182000 132500 199000 1000 2000 "clearline"]
+	Line[132500 199000 136000 202500 1000 2000 "clearline"]
+	Line[136000 202500 151500 202500 1000 2000 "clearline"]
+	Line[153957 213000 153957 204957 1000 2000 "clearline"]
+	Line[153957 204957 151500 202500 1000 2000 "clearline"]
+	Line[170000 192000 170000 231000 1000 2000 "clearline"]
+	Line[170000 231000 166500 234500 1000 2000 "clearline"]
+	Line[151595 226000 151595 231095 1000 2000 "clearline"]
+	Line[151595 231095 155000 234500 1000 2000 "clearline"]
+	Line[155000 234500 166500 234500 1000 2000 "clearline"]
 	Polygon("clearpoly")
 	(
 		[4500 155000] [53000 155000] [53000 175000] [4500 175000] 
@@ -1630,6 +1662,15 @@ Layer(5 "silk")
 	Line[155500 21400 162500 21400 1000 2000 "clearline"]
 	Line[160500 29900 167500 29900 1000 2000 "clearline"]
 	Line[160500 34900 167500 34900 1000 2000 "clearline"]
+	Line[119000 95000 115500 98500 1000 2000 "clearline"]
+	Line[115500 98500 115500 96500 1000 2000 "clearline"]
+	Line[115500 98500 117500 98500 1000 2000 "clearline"]
+	Line[131500 171000 128000 167500 1000 2000 "clearline"]
+	Line[128000 167500 130000 167500 1000 2000 "clearline"]
+	Line[128000 167500 128000 169500 1000 2000 "clearline"]
+	Line[172000 97500 168500 101000 1000 2000 "clearline"]
+	Line[168500 99000 168500 101000 1000 2000 "clearline"]
+	Line[168500 101000 170500 101000 1000 2000 "clearline"]
 	Text[180000 91000 0 100 "AREF" "clearline"]
 	Text[182000 81000 0 100 "SDA" "clearline"]
 	Text[183000 71000 0 100 "SCL" "clearline"]
@@ -1693,6 +1734,8 @@ Layer(5 "silk")
 	Text[73500 205000 0 100 "Iowa Scaled Engineering" "clearline"]
 	Text[73500 212500 0 100 "http://www.iascaled.com" "clearline"]
 	Text[73500 220000 0 100 "CC BY-SA (C)2013" "clearline"]
+	Text[152500 231500 0 100 "PWR" "clearline"]
+	Text[168000 217500 0 100 "+" "clearline"]
 )
 NetList()
 (
@@ -1709,6 +1752,7 @@ NetList()
 		Connect("R2-2")
 		Connect("R3-2")
 		Connect("R4-2")
+		Connect("R5-2")
 		Connect("U1-28")
 		Connect("U2-4")
 		Connect("U4-6")
@@ -1722,6 +1766,7 @@ NetList()
 		Connect("C5-1")
 		Connect("C6-2")
 		Connect("C7-2")
+		Connect("D1-1")
 		Connect("J1-6")
 		Connect("J1-7")
 		Connect("J3-2")
@@ -1924,6 +1969,11 @@ NetList()
 		Connect("JP8-1")
 		Connect("R4-1")
 		Connect("U4-4")
+	)
+	Net("unnamed_net33" "(unknown)")
+	(
+		Connect("D1-2")
+		Connect("R5-1")
 	)
 	Net("VREF" "(unknown)")
 	(
