@@ -1,6 +1,6 @@
 /*************************************************************************
-Title:    ARD-LTC2499 Library Example Arduino Sketch
-Authors:  Nathan D. Holmes <maverick@drgw.net>
+Title:    ARD-LTC2499 Reflow Oven Monitor Sketch
+Authors:  Michael Petersen <railfan@drgw.net>
 File:     $Id: $
 License:  GNU General Public License v3
 
@@ -23,10 +23,6 @@ LICENSE:
 #define TEMPERATURE_ALARM 190.0
 
 #define ALARM_PIN 7
-#define DEBUG_CH_PIN 6
-#define DEBUG_TEMP_PIN 5
-#define DEBUG_COLD_PIN 3
-#define DEBUG_SD_PIN 2
 
 #include <Wire.h>
 #include <Ard2499.h>
@@ -89,10 +85,6 @@ void setup()
 
   // Configure IO pins
   pinMode(ALARM_PIN, OUTPUT);
-  pinMode(DEBUG_CH_PIN, OUTPUT);
-  pinMode(DEBUG_TEMP_PIN, OUTPUT);
-  pinMode(DEBUG_COLD_PIN, OUTPUT);
-  pinMode(DEBUG_SD_PIN, OUTPUT);
 
   // Configure SD card chip select
   pinMode(chipSelectSD, OUTPUT);
@@ -148,13 +140,9 @@ void loop() {
   char string[16];
   float Vadc, Vcj, Tcj;
   
-  digitalWrite(DEBUG_CH_PIN, HIGH);
   ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_DIFF_1P_0N);
-  digitalWrite(DEBUG_CH_PIN, LOW);
 
-  digitalWrite(DEBUG_TEMP_PIN, HIGH);
   adcVal = ard2499board1.ltc2499Read();
-  digitalWrite(DEBUG_TEMP_PIN, LOW);
   Vadc = 1000 * ((adcVal*2.048) / 16777216.0);
 
 //  Serial.print("Vadc: ");
@@ -167,9 +155,7 @@ void loop() {
   Serial.print(((filter*2.048) / 16777216.0), 6);
 */
 
-  digitalWrite(DEBUG_COLD_PIN, HIGH);
   Tcj = ard2499board1.ltc2499ReadTemperature(ARD2499_TEMP_C);
-  digitalWrite(DEBUG_COLD_PIN, LOW);
   Vcj = computeColdJunctionVoltageTypeK(Tcj);
 //  Serial.print("Tcj: ");
 //  Serial.print(Tcj);
@@ -229,10 +215,8 @@ void loop() {
   {
     decisecs = 0;
     logBlinky ^= 1;
-    digitalWrite(DEBUG_SD_PIN, HIGH);
     logFile.println(T, 3);
     logFile.flush();
-    digitalWrite(DEBUG_SD_PIN, LOW);
   }
 }
 

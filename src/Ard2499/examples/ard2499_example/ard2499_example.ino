@@ -19,6 +19,12 @@ byte i=0;
 void loop() {
   // print the results to the serial monitor:
 
+  while(!Serial.available())
+  {
+    enumerateI2C(false);
+    delay(1000);
+  }
+
   byte retval = 0;
  
   Serial.print("eeprom mac = [");
@@ -136,3 +142,34 @@ void loop() {
   
   delay(1000);
 }
+
+uint8_t enumerateI2C(boolean showErrors)
+{
+  uint8_t addr, stat, last_ack = 0x00;
+  for(addr=0; addr<128; addr++)
+  {
+    Wire.beginTransmission(addr);
+    stat = Wire.endTransmission();
+    if(stat)
+    {
+      if(showErrors)
+      {
+        Serial.print("0x");
+        Serial.print(addr, HEX);
+        Serial.print(": ");
+        Serial.print(stat);
+        Serial.print("\n");
+      }
+    }  
+    else
+    {   
+      Serial.print("0x");
+      Serial.print(addr, HEX);
+      Serial.print(" ");
+      last_ack = addr;   
+    }
+  }  
+  Serial.print("\n");
+  return last_ack;
+}
+ 
