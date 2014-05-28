@@ -23,10 +23,13 @@ LICENSE:
 
 #include <stdlib.h>
 #include <string.h>
-#include <avr/io.h>
 #include "Arduino.h"
 #include "Wire.h"
 
+#ifndef _BV
+#define _BV(a) (1<<(a))
+#define _UNDEFINE_BV
+#endif
 
 #define FAKE_CONFIG1_TEMPERATURE   6
 #define LTC2499_CONFIG1_ENABLE     5
@@ -139,7 +142,6 @@ LICENSE:
 #define LTC2499_READ_ERROR         0x01000001
 #define LTC2499_OVERRANGE_POSITIVE 0x01000000
 #define LTC2499_OVERRANGE_NEGATIVE 0x11000000
-
 
 class Ard2499
 {

@@ -21,7 +21,6 @@ LICENSE:
 
 #include <stdlib.h>
 #include <string.h>
-#include <util/delay.h>
 
 #include "Ard2499.h"
 
@@ -66,7 +65,7 @@ byte Ard2499::ltc2499ChangeChannel(byte channel, bool addStop)
 		{
 			if (0 == blockingCountdown)
 				return(ARD2499_LTC2499_ERR);
-			_delay_ms(5);
+			delay(5);
 		}	
 		else
 			break;
@@ -136,7 +135,7 @@ unsigned long Ard2499::ltc2499ReadRaw()
 		{
 			if (0 == blockingCountdown)
 				return(LTC2499_RAW_READ_ERROR);
-			_delay_ms(5);
+			delay(5);
 		}	
 		else
 			break;
@@ -328,7 +327,7 @@ byte Ard2499::eepromWrite(int address, byte value, byte blocking=1)
 			Wire.write(address);
 			if (0 == Wire.endTransmission(true))
 				return(0);
-			_delay_ms(1);
+			delay(1);
 		}
 		return(ARD2499_EEPROM_ERR);
 	}
