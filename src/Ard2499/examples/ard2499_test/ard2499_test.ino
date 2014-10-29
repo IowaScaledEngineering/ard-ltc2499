@@ -224,6 +224,7 @@ void findI2CSlave(uint8_t addr)
       done = 1;
     }
   }
+  delay(1000);
 }
 
 byte enumerateI2C(boolean showErrors)
