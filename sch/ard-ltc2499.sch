@@ -390,7 +390,7 @@ refdes=U1
 T 62800 50300 5 10 1 1 0 4 1
 device=LTC2499
 T 64900 54200 5 10 0 0 0 6 1
-footprint=LTC_UHF
+footprint=LTC_UHF38
 }
 C 45000 47900 1 0 0 78l05-1.sym
 {
