@@ -184,7 +184,7 @@ void loop() {
 
     }
 
-    uint32_t adc = 0;
+    long adc = 0;
     ard2499board1.ltc2499ChangeChannel(newChannel);
 
     if (i > 15)
@@ -198,14 +198,19 @@ void loop() {
     }
     else
     {
-      Serial.print("Channel ");
-      Serial.print(i);
-      Serial.print("... ");
+      uint8_t count = 0;
       do
       {
+        Serial.print("Channel ");
+        Serial.print(i);
+        Serial.print("... ");
         adc = ard2499board1.ltc2499Read();
-//        Serial.println(adc);
-      } while(adc > 300);
+        Serial.println(adc);
+        if(adc < 300)
+          count++;
+        else
+          count = 0;
+      } while(count < 3);
       Serial.println("Done!");
     }
   }
