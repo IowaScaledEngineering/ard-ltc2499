@@ -206,7 +206,7 @@ void loop() {
         Serial.print("... ");
         adc = ard2499board1.ltc2499Read();
         Serial.println(adc);
-        if(adc < 300)
+        if((-500 < adc) && (adc < 500))
           count++;
         else
           count = 0;
