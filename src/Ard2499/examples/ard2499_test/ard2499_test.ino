@@ -47,7 +47,9 @@ void setup() {
 byte i=0;
 
 void loop() {
-  // print the results to the serial monitor:
+  byte retval = 0;
+ 
+//  goto skipJumpers;
 
   Serial.print("Looking for 0x52 (JP7)... ");
   findI2CSlave(0x52);
@@ -79,8 +81,6 @@ void loop() {
   Serial.print("Looking for 0x45 (Open)... ");
   findI2CSlave(0x45);
 
-  byte retval = 0;
- 
   Serial.print("eeprom mac = [");
   Serial.print(ard2499board1.eui48Get());
   Serial.print("]\n");
@@ -107,74 +107,93 @@ void loop() {
   Serial.print(ard2499board1.eepromRead(0, true), HEX);
   Serial.print("\n");
 
+skipJumpers:
+
   for(i=0; i<17; i++)
   {
     byte newChannel;
+    byte adjacentChannel;
     
     switch(i)
     {
        case 0:
           newChannel = LTC2499_CHAN_SINGLE_0P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_1P;
           break;
           
        case 1:
           newChannel = LTC2499_CHAN_SINGLE_1P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_2P;
           break;
 
        case 2:
           newChannel = LTC2499_CHAN_SINGLE_2P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_3P;
           break;
 
        case 3:
           newChannel = LTC2499_CHAN_SINGLE_3P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_4P;
           break;
 
        case 4:
           newChannel = LTC2499_CHAN_SINGLE_4P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_5P;
           break;
           
        case 5:
           newChannel = LTC2499_CHAN_SINGLE_5P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_6P;
           break;
 
        case 6:
           newChannel = LTC2499_CHAN_SINGLE_6P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_7P;
           break;
 
        case 7:
           newChannel = LTC2499_CHAN_SINGLE_7P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_8P;
           break;
 
        case 8:
           newChannel = LTC2499_CHAN_SINGLE_8P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_9P;
           break;
           
        case 9:
           newChannel = LTC2499_CHAN_SINGLE_9P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_10P;
           break;
 
        case 10:
           newChannel = LTC2499_CHAN_SINGLE_10P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_11P;
           break;
 
        case 11:
           newChannel = LTC2499_CHAN_SINGLE_11P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_12P;
           break;
 
        case 12:
           newChannel = LTC2499_CHAN_SINGLE_12P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_13P;
           break;
 
        case 13:
           newChannel = LTC2499_CHAN_SINGLE_13P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_14P;
           break;
 
        case 14:
           newChannel = LTC2499_CHAN_SINGLE_14P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_15P;
           break;
 
        case 15:
           newChannel = LTC2499_CHAN_SINGLE_15P;
+          adjacentChannel = LTC2499_CHAN_SINGLE_0P;  // Bogus
           break;
 
        case 16:
@@ -199,19 +218,45 @@ void loop() {
     else
     {
       uint8_t count = 0;
+      Serial.print("Channel ");
+      Serial.print(i);
       do
       {
-        Serial.print("Channel ");
-        Serial.print(i);
-        Serial.print("... ");
         adc = ard2499board1.ltc2499Read();
-        Serial.println(adc);
+//        Serial.println(adc);
         if((-500 < adc) && (adc < 500))
+        {
           count++;
+          Serial.print("+");
+        }
         else
+        {
           count = 0;
+          Serial.print(".");
+        }
       } while(count < 3);
-      Serial.println("Done!");
+
+      // Check that it's not shorted to the adjacent channel
+      ard2499board1.ltc2499ChangeChannel(adjacentChannel);
+
+      count = 0;
+      do
+      {
+        adc = ard2499board1.ltc2499Read();
+//        Serial.println(adc);
+        if((adc < -500) || (500 < adc))
+        {
+          count++;
+          Serial.print("X");
+        }
+        else
+        {
+          count = 0;
+          Serial.print("-");
+        }
+      } while(count < 3);
+      
+      Serial.println(" Done!");
     }
   }
 }
