@@ -247,7 +247,7 @@ skipJumpers:
         if((adc < -500) || (500 < adc))
         {
           count++;
-          Serial.print("X");
+          Serial.print("|");
         }
         else
         {
@@ -255,6 +255,26 @@ skipJumpers:
           Serial.print("-");
         }
       } while(count < 3);
+
+      // Verify it's still shorted to original channel
+      ard2499board1.ltc2499ChangeChannel(newChannel);
+
+      count = 0;
+      do
+      {
+        adc = ard2499board1.ltc2499Read();
+//        Serial.println(adc);
+        if((-500 < adc) && (adc < 500))
+        {
+          count++;
+          Serial.print("+");
+        }
+        else
+        {
+          count = 0;
+          Serial.print(".");
+        }
+      } while(count < 1);
       
       Serial.println(" Done!");
     }
@@ -269,7 +289,8 @@ void findI2CSlave(uint8_t addr)
     Wire.beginTransmission(addr);
     stat = Wire.endTransmission();
     if(!stat)
-    {   
+    {
+      Serial.print("\a");
       Serial.println("Done!");
       done = 1;
     }
