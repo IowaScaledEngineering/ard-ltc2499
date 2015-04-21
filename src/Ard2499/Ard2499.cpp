@@ -91,9 +91,9 @@ long Ard2499::ltc2499Read()
 	switch(upperByte)
 	{
 		case 0xC0:
-			return(LTC2499_OVERRANGE_NEGATIVE);
-		case 0x3F:
 			return(LTC2499_OVERRANGE_POSITIVE);
+		case 0x3F:
+			return(LTC2499_OVERRANGE_NEGATIVE);
 	}
 	rawValue = (rawValue & 0x7FFFFFFF)>>6; // Get rid of the sub-LSBs
 
