@@ -38,6 +38,7 @@ byte confChan=0;
 void setup() {
   // initialize serial communications at 9600 bps:
   Serial.begin(9600);
+  while(!Serial);
   Wire.begin();
   ard2499board1.begin(ARD2499_ADC_ADDR_ZZZ, ARD2499_EEP_ADDR_ZZ);
   ard2499board1.ltc2499ChangeConfiguration(LTC2499_CONFIG2_60_50HZ_REJ);
