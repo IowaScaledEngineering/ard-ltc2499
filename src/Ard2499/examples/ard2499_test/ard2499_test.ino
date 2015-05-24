@@ -213,6 +213,14 @@ skipJumpers:
       Serial.print(" = [");
       Serial.print(ard2499board1.ltc2499ReadTemperature(ARD2499_TEMP_F));
       Serial.print(" F]\n");
+      
+      ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_SINGLE_0P);
+      adc = ard2499board1.ltc2499Read();
+      Serial.print("Channel 0 Voltage = ");
+      Serial.print(" = [");
+      Serial.print(2.048 * (adc / 16777216.0), 3);
+      Serial.print(" V]\n");
+      
       i = 15;  // Stay on temperature
       delay(1000);
     }
