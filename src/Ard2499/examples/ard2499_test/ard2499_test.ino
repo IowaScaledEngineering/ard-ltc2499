@@ -219,7 +219,7 @@ skipJumpers:
       Serial.print("Channel 0 Voltage = ");
       Serial.print(" = [");
       Serial.print(2.048 * (adc / 16777216.0), 3);
-      Serial.print(" V]\n");
+      Serial.print(" V] (Expect ~ 1.677V)\n");
       
       i = 15;  // Stay on temperature
       delay(1000);
