@@ -147,7 +147,7 @@ class Ard2499
 {
 	public:
 		Ard2499();
-		byte begin(byte ltc2499Address, byte eepromAddress);
+		byte begin(byte ltc2499Address, byte eepromAddress, uint16_t referenceMillivolts);
 
 		const char* eui48Get();
 		byte eepromRead(int address, byte defaultOnError);
@@ -170,6 +170,7 @@ class Ard2499
 		uint8_t i2cAddr_eeprom;
 		uint8_t current2499Config;
 		uint8_t current2499Channel;
+		uint16_t referenceMillivolts;
 		char eui48[6*2+1];
 };
 

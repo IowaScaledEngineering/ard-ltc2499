@@ -199,7 +199,11 @@ unsigned int Ard2499::ltc2499ReadTemperatureDeciK()
 
 	// Throw away the sub-LSBs
 	readVal >>= 6;
-	tempDK = ((0x00FFFFFF & readVal) * 256) / 19625;
+
+	tempDK = (unsigned long)referenceMillivolts) / (1570 * 100);
+	tempDK *= (0x00FFFFFF & readVal);
+
+//	tempDK = ((0x00FFFFFF & readVal) * 256) / 19625;
 
 	// tempDK is now the temperature in deci-kelvin
 	return(tempDK);
@@ -221,7 +225,7 @@ const char* Ard2499::eui48Get()
 }
 
 
-byte Ard2499::begin(byte ltc2499Address, byte eepromAddress)
+byte Ard2499::begin(byte ltc2499Address, byte eepromAddress, uint16_t referenceMillivolts = 4096)
 {
 	byte retval = 0;
 	byte i;
@@ -269,7 +273,10 @@ byte Ard2499::begin(byte ltc2499Address, byte eepromAddress)
 			for(i=0; i<12; i+=2)
 				sprintf(&eui48[i], "%02X", Wire.read());
 		}
-	}		
+	}	
+
+	this.referenceMillivolts = referenceMillivolts;
+	
 	return(init_status);
 }
 
