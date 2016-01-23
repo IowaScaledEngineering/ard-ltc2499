@@ -103,6 +103,18 @@ long Ard2499::ltc2499Read()
 
 }
 
+float Ard2499::ltc2499ReadVoltage()
+{
+	long value = ltc2499Read();
+	
+	if (LTC2499_OVERRANGE_POSITIVE == value)
+		return(INFINITY);
+	if (LTC2499_OVERRANGE_NEGATIVE == value)
+		return(-1*INFINITY);
+
+	return((value / 16777216.0) * (referenceMillivolts / 2000.0));
+}
+
 long Ard2499::ltc2499ReadAndChangeChannel(byte nextChannel)
 {
 	if (ARD2499_SUCCESS != ltc2499ChangeChannel(nextChannel, false))
@@ -184,7 +196,7 @@ float Ard2499::ltc2499ReadTemperature(byte temperatureUnits)
 unsigned int Ard2499::ltc2499ReadTemperatureDeciK()
 {
 	unsigned long readVal = 0;
-	unsigned int tempDK = 0;
+	unsigned long tempDK = 0;
 	
 	// If we're currently not set for the temperature channel, switch us over
 	// If we are currently set for the temp channel, then that write will have
@@ -200,10 +212,11 @@ unsigned int Ard2499::ltc2499ReadTemperatureDeciK()
 	// Throw away the sub-LSBs
 	readVal >>= 6;
 
-	tempDK = (unsigned long)referenceMillivolts) / (1570 * 100);
-	tempDK *= (0x00FFFFFF & readVal);
-
-//	tempDK = ((0x00FFFFFF & readVal) * 256) / 19625;
+	tempDK = (0x00FFFFFF & readVal);
+	// Divide by 2 for FS = 1/2 VREF
+	// Divide by 1570 (eqn from 2499 datasheet)
+	// Divide by 100 to convert millivolts to decivolts
+	tempDK = (tempDK * (unsigned long)referenceMillivolts) / 314000;
 
 	// tempDK is now the temperature in deci-kelvin
 	return(tempDK);
@@ -275,7 +288,7 @@ byte Ard2499::begin(byte ltc2499Address, byte eepromAddress, uint16_t referenceM
 		}
 	}	
 
-	this.referenceMillivolts = referenceMillivolts;
+	this->referenceMillivolts = referenceMillivolts;
 	
 	return(init_status);
 }

@@ -31,6 +31,8 @@ LICENSE:
 #include <Wire.h>
 #include <Ard2499.h>
 
+#define vref 4.096
+
 Ard2499 ard2499board1;
 
 byte confChan=0;
@@ -40,7 +42,7 @@ void setup() {
   Serial.begin(9600);
   while(!Serial);
   Wire.begin();
-  ard2499board1.begin(ARD2499_ADC_ADDR_ZZZ, ARD2499_EEP_ADDR_ZZ);
+  ard2499board1.begin(ARD2499_ADC_ADDR_ZZZ, ARD2499_EEP_ADDR_ZZ, vref*1000.0);
   ard2499board1.ltc2499ChangeConfiguration(LTC2499_CONFIG2_60_50HZ_REJ);
   ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_SINGLE_0P);
 
@@ -114,7 +116,6 @@ skipJumpers:
   {
     byte newChannel;
     byte adjacentChannel;
-    
     switch(i)
     {
        case 0:
@@ -213,14 +214,19 @@ skipJumpers:
       Serial.print(" = [");
       Serial.print(ard2499board1.ltc2499ReadTemperature(ARD2499_TEMP_F));
       Serial.print(" F]\n");
-      
+
       ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_SINGLE_0P);
       adc = ard2499board1.ltc2499Read();
       Serial.print("Channel 0 Voltage = ");
       Serial.print(" = [");
-      Serial.print(2.048 * (adc / 16777216.0), 3);
-      Serial.print(" V] (Expect ~ 1.677V)\n");
-      
+      Serial.print((vref/2.0) * (adc / 16777216.0), 3);
+      Serial.print(" V] (Expect ~ 1.625V)");
+
+      float voltage = ard2499board1.ltc2499ReadVoltage();
+      Serial.print(" [");
+      Serial.print(ard2499board1.ltc2499ReadVoltage(), 3);
+      Serial.print(" V]\n");
+
       i = 15;  // Stay on temperature
       delay(1000);
     }
