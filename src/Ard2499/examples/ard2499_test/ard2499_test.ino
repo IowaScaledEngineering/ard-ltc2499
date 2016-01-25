@@ -31,7 +31,7 @@ LICENSE:
 #include <Wire.h>
 #include <Ard2499.h>
 
-#define vref 4.096
+#define VREF 4.096
 
 Ard2499 ard2499board1;
 
@@ -42,7 +42,7 @@ void setup() {
   Serial.begin(9600);
   while(!Serial);
   Wire.begin();
-  ard2499board1.begin(ARD2499_ADC_ADDR_ZZZ, ARD2499_EEP_ADDR_ZZ, vref*1000.0);
+  ard2499board1.begin(ARD2499_ADC_ADDR_ZZZ, ARD2499_EEP_ADDR_ZZ, VREF * 1000.0);
   ard2499board1.ltc2499ChangeConfiguration(LTC2499_CONFIG2_60_50HZ_REJ);
   ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_SINGLE_0P);
 
