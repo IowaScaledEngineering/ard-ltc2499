@@ -238,7 +238,7 @@ const char* Ard2499::eui48Get()
 }
 
 
-byte Ard2499::begin(byte ltc2499Address, byte eepromAddress, uint16_t referenceMillivolts = 4096)
+byte Ard2499::begin(byte ltc2499Address, byte eepromAddress, uint16_t referenceMillivolts)
 {
 	byte retval = 0;
 	byte i;
