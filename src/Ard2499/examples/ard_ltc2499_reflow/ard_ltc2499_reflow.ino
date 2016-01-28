@@ -234,7 +234,7 @@ float computeTemperatureTypeK(float V)
   
   float T0, V0, p1, p2, p3, p4, q1, q2, q3;
   
-  if( (-6.404 < V) || (V <= -3.554) )
+  if( (-6.404 < V) && (V <= -3.554) )
   {
     T0 = -1.2147164E+02;
     V0 = -4.1790858E+00;
@@ -246,7 +246,7 @@ float computeTemperatureTypeK(float V)
     q2 = 2.7791285E-01;
     q3 = 2.5163349E-02;
   }
-  else if( (-3.554 < V) || (V <= 4.096) )
+  else if( (-3.554 < V) && (V <= 4.096) )
   {
     T0 = -8.7935962E+00;
     V0 = -3.4489914E-01;
@@ -258,7 +258,7 @@ float computeTemperatureTypeK(float V)
     q2 = -2.0397750E-02;
     q3 = -1.8424107E-03;
   }
-  else if( (4.096 < V) || (V <= 16.397) )
+  else if( (4.096 < V) && (V <= 16.397) )
   {
     T0 = 3.1018976E+02;
     V0 = 1.2631386E+01;
@@ -270,7 +270,7 @@ float computeTemperatureTypeK(float V)
     q2 = 1.1413069E-02;
     q3 = -3.9275155E-04;
   }
-  else if( (16.397 < V) || (V <= 33.275) )
+  else if( (16.397 < V) && (V <= 33.275) )
   {
     T0 = 6.0572562E+02;
     V0 = 2.5148718E+01;
@@ -282,7 +282,7 @@ float computeTemperatureTypeK(float V)
     q2 = 4.6121445E-04;
     q3 = 2.5488122E-05;
   }
-  else if( (33.275 < V) || (V <= 69.553) )
+  else if( (33.275 < V) && (V <= 69.553) )
   {
     T0 = 1.0184705E+03;
     V0 = 4.1993851E+01;
