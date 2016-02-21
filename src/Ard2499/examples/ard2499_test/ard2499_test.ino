@@ -219,7 +219,7 @@ skipJumpers:
       adc = ard2499board1.ltc2499Read();
       Serial.print("Channel 0 Voltage = ");
       Serial.print(" = [");
-      Serial.print((vref/2.0) * (adc / 16777216.0), 3);
+      Serial.print((VREF/2.0) * (adc / 16777216.0), 3);
       Serial.print(" V] (Expect ~ 1.625V)");
 
       float voltage = ard2499board1.ltc2499ReadVoltage();
