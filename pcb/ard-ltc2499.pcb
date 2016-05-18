@@ -3,14 +3,14 @@
 # To read pcb files, the pcb version (or the git source date) must be >= the file version
 FileVersion[20070407]
 
-PCB["" 420000 270000]
+PCB["" 210000 270000]
 
 Grid[500.0 0 0 0]
-Cursor[171500 90500 0.000000]
+Cursor[39000 50500 0.000000]
 PolyArea[200000000.000000]
 Thermal[0.500000]
 DRC[800 800 800 800 2000 800]
-Flags("showdrc,rubberband,nameonpcb,clearnew")
+Flags("showdrc,rubberband,nameonpcb,clearnew,snappin")
 Groups("1,c:2,s:3")
 Styles["Signal,1000,4000,2000,1000:Power,2500,6000,3500,1000:Fat,4000,6000,3500,1000:Skinny,600,2402,1181,600"]
 
@@ -1333,6 +1333,34 @@ Element["" "RPACK2-0606" "R2" "2k" 139500 55500 -2500 5500 0 100 ""]
 	ElementLine [-6299 3741 -6299 -3741 1000]
 
 	)
+
+Element["onsolder" "SolderJumperSmall" "JP2B" "unknown" 148000 91500 7500 2500 0 80 "auto"]
+(
+	Attribute("description" "Soldering Jumper, 60mil, open")
+	Attribute("author" "Stefan Salewski")
+	Attribute("copyright" "2008 S. Salewski")
+	Attribute("use-license" "unlimited")
+	Attribute("dist-license" "GPL")
+	Pad[-3400 0 -3400 0 6000 2000 6000 "1" "1" "onsolder"]
+	Pad[-1900 1500 -1900 -1500 3000 2000 3000 "1" "1" "onsolder,square"]
+	Pad[3400 0 3400 0 6000 2000 6000 "2" "2" "onsolder,edge2"]
+	Pad[1900 1500 1900 -1500 3000 2000 3000 "2" "2" "onsolder,square"]
+
+	)
+
+Element["onsolder" "SolderJumperSmall" "JP2A" "unknown" 176500 86000 -18000 2500 0 80 "auto"]
+(
+	Attribute("description" "Soldering Jumper, 60mil, open")
+	Attribute("author" "Stefan Salewski")
+	Attribute("copyright" "2008 S. Salewski")
+	Attribute("use-license" "unlimited")
+	Attribute("dist-license" "GPL")
+	Pad[3400 0 3400 0 6000 2000 6000 "1" "1" "onsolder,edge2"]
+	Pad[1900 -1500 1900 1500 3000 2000 3000 "1" "1" "onsolder,square"]
+	Pad[-3400 0 -3400 0 6000 2000 6000 "2" "2" "onsolder"]
+	Pad[-1900 -1500 -1900 1500 3000 2000 3000 "2" "2" "onsolder,square"]
+
+	)
 Layer(1 "component")
 (
 	Line[10000 150000 25500 150000 5000 2000 "clearline"]
@@ -1643,8 +1671,6 @@ Layer(2 "solder")
 	Line[151000 36000 151000 66000 1000 2000 "clearline"]
 	Line[151000 66000 146000 71000 1000 2000 "clearline"]
 	Line[146000 71000 146000 81000 1000 2000 "clearline"]
-	Line[146000 81000 149000 84000 1000 2000 "clearline"]
-	Line[200000 84000 149000 84000 1000 2000 "clearline"]
 	Line[19500 110500 19500 37500 1500 2000 "clearline"]
 	Line[19500 37500 25500 31500 1500 2000 "clearline"]
 	Line[25500 31500 84500 31500 1500 2000 "clearline"]
@@ -1654,6 +1680,21 @@ Layer(2 "solder")
 	Line[92500 15000 143000 15000 1500 2000 "clearline"]
 	Line[143000 15000 147000 19000 1500 2000 "clearline"]
 	Line[147000 19000 147000 44500 1500 2000 "clearline"]
+	Line[144600 91500 144600 82400 1000 2000 "clearline"]
+	Line[144600 82400 146000 81000 1000 2000 "clearline"]
+	Line[157750 97750 157750 93250 1000 2000 "clearline"]
+	Line[157750 93250 156000 91500 1000 2000 "clearline"]
+	Line[156000 91500 151400 91500 1000 2000 "clearline"]
+	Line[146000 81000 191000 81000 1000 2000 "clearline"]
+	Line[191000 81000 194000 84000 1000 2000 "clearline"]
+	Line[194000 84000 200000 84000 1000 2000 "clearline"]
+	Line[173100 86000 173100 93500 1000 2000 "clearline"]
+	Line[179900 86000 188500 86000 1000 2000 "clearline"]
+	Line[188500 86000 191500 89000 1000 2000 "clearline"]
+	Line[191500 89000 203000 89000 1000 2000 "clearline"]
+	Line[203000 89000 205500 86500 1000 2000 "clearline"]
+	Line[205500 86500 205500 79500 1000 2000 "clearline"]
+	Line[205500 79500 200000 74000 1000 2000 "clearline"]
 	Polygon("clearpoly")
 	(
 		[4500 155000] [22500 155000] [22500 175000] [4500 175000] 
@@ -1895,6 +1936,7 @@ NetList()
 	)
 	Net("SCL" "(unknown)")
 	(
+		Connect("JP2A-2")
 		Connect("R1-6")
 		Connect("U1-2")
 		Connect("U4-1")
@@ -1902,6 +1944,7 @@ NetList()
 	)
 	Net("SDA" "(unknown)")
 	(
+		Connect("JP2B-2")
 		Connect("R1-5")
 		Connect("U1-3")
 		Connect("U4-3")
@@ -1929,12 +1972,14 @@ NetList()
 	(
 		Connect("J2-17")
 		Connect("JP1-4")
+		Connect("JP2B-1")
 		Connect("U5-6")
 	)
 	Net("unnamed_net5" "(unknown)")
 	(
 		Connect("J2-18")
 		Connect("JP1-1")
+		Connect("JP2A-1")
 		Connect("U5-3")
 	)
 	Net("unnamed_net6" "(unknown)")
