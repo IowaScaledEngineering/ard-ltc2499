@@ -1,0 +1,6 @@
+schematics test-ard-ltc2499.sch
+output-name ../pcb/test-ard-ltc2499
+skip-m4
+elements-dir ../../../footprints
+
+
