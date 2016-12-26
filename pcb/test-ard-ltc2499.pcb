@@ -918,7 +918,7 @@ Element["hidename" "ARDUINO_SHIELD_HOLE" "H4" "unknown" 300.00mil 2600.00mil 0.0
 
 	)
 
-Element["" "DIA515" "D1" "unknown" 1465.00mil 2405.00mil -190.00mil -250.00mil 0 100 ""]
+Element["" "DIA515" "D1" "unknown" 1465.00mil 2405.00mil -225.00mil -110.00mil 0 100 ""]
 (
 	Pin[-140.50mil 0.0000 68.00mil 20.00mil 73.00mil 63.00mil "" "" "hole,edge2"]
 	Pin[140.50mil 0.0000 68.00mil 20.00mil 73.00mil 63.00mil "" "" "hole,edge2"]
