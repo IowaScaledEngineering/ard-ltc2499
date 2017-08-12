@@ -72,6 +72,10 @@ void loop()
 
 	writeAnalogSwitch(0x00);
 
+	Serial.print("VREF = ");
+	Serial.print(VREF, 3);
+	Serial.print("V\n\n");
+
 	Serial.println("\nBasic Tests");
 
 	// Regulator Test
@@ -91,7 +95,10 @@ void loop()
 	Serial.print("Vref: ");
 	Serial.print(voltage, 3);
 	Serial.print("V ... ");
-	result = ((voltage > 4.05) && (voltage < 4.15));
+	if(VREF < 2)
+		result = ((voltage > 1.20) && (voltage < 1.30));
+	else
+		result = ((voltage > 4.05) && (voltage < 4.15));
 	testResult(result);
 
 	// EEPROM Address Test
