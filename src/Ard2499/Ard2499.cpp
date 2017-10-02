@@ -58,10 +58,10 @@ byte Ard2499::ltc2499ChangeChannel(byte channel, bool addStop)
 	blockingCountdown = 40;
 	while(blockingCountdown--)
 	{
-		Wire.beginTransmission(i2cAddr_ltc2499);
-		Wire.write(config1);
-		Wire.write(config2);
-		if (0 != Wire.endTransmission(addStop))
+		this->WireInterface->beginTransmission(i2cAddr_ltc2499);
+		this->WireInterface->write(config1);
+		this->WireInterface->write(config2);
+		if (0 != this->WireInterface->endTransmission(addStop))
 		{
 			if (0 == blockingCountdown)
 				return(ARD2499_LTC2499_ERR);
@@ -120,8 +120,8 @@ long Ard2499::ltc2499ReadAndChangeChannel(byte nextChannel)
 	if (ARD2499_SUCCESS != ltc2499ChangeChannel(nextChannel, false))
 	{
 		// Run another transmission through just to send out a stop bit
-		Wire.beginTransmission(i2cAddr_ltc2499);
-		Wire.endTransmission((uint8_t)true);
+		this->WireInterface->beginTransmission(i2cAddr_ltc2499);
+		this->WireInterface->endTransmission((uint8_t)true);
 		return(LTC2499_READ_ERROR);
 	}
 	// Otherwise, we've succeeded and are sitting on a restart condition
@@ -141,9 +141,9 @@ unsigned long Ard2499::ltc2499ReadRaw()
 	// wait.
 	while(blockingCountdown--)
 	{
-		Wire.requestFrom((uint8_t)i2cAddr_ltc2499, (uint8_t)4, (uint8_t)true);
+		this->WireInterface->requestFrom((uint8_t)i2cAddr_ltc2499, (uint8_t)4, (uint8_t)true);
 		// Error occurred, we don't have as many bytes as expected
-		if (Wire.available() < 4)
+		if (this->WireInterface->available() < 4)
 		{
 			if (0 == blockingCountdown)
 				return(LTC2499_RAW_READ_ERROR);
@@ -153,13 +153,13 @@ unsigned long Ard2499::ltc2499ReadRaw()
 			break;
 	}
 
-	retval |= Wire.read();
+	retval |= this->WireInterface->read();
 	retval <<= 8;
-	retval |= Wire.read();
+	retval |= this->WireInterface->read();
 	retval <<= 8;
-	retval |= Wire.read();
+	retval |= this->WireInterface->read();
 	retval <<= 8;
-	retval |= Wire.read();
+	retval |= this->WireInterface->read();
 
 	return(retval);
 }
@@ -169,8 +169,8 @@ unsigned long Ard2499::ltc2499ReadRawAndChangeChannel(byte nextChannel)
 	if (ARD2499_SUCCESS != ltc2499ChangeChannel(nextChannel, false))
 	{
 		// Run another transmission through just to send out a stop bit
-		Wire.beginTransmission(i2cAddr_ltc2499);
-		Wire.endTransmission((uint8_t)true);
+		this->WireInterface->beginTransmission(i2cAddr_ltc2499);
+		this->WireInterface->endTransmission((uint8_t)true);
 		return(LTC2499_RAW_READ_ERROR);
 	}
 	// Otherwise, we've succeeded and are sitting on a restart condition
@@ -229,8 +229,22 @@ Ard2499::Ard2499()
 	i2cAddr_eeprom = 0;
 	current2499Config = 0;
 	current2499Channel = 0;
+
+#ifdef ARDUINO_SAM_DUE
+	WireInterface = &Wire1;
+#else 
+	WireInterface = &Wire;
+#endif
+
 	strcpy(eui48, "Unknown");
 }
+
+Ard2499::Ard2499(TwoWire& wire)
+{
+	Ard2499();
+	this->WireInterface = &wire;
+}
+
 
 const char* Ard2499::eui48Get()
 {
@@ -250,10 +264,10 @@ byte Ard2499::begin(byte ltc2499Address, byte eepromAddress, uint16_t referenceM
 	current2499Channel = LTC2499_CHAN_DIFF_0P_1N;
 	current2499Config = LTC2499_CONFIG2_60_50HZ_REJ;
 	
-	Wire.beginTransmission(i2cAddr_ltc2499);
-	Wire.write(0x80 | _BV(LTC2499_CONFIG1_ENABLE) | (0x1F & current2499Channel));
-	Wire.write(_BV(LTC2499_CONFIG2_ENABLE2) | (0x7F & current2499Config));
-	retval = Wire.endTransmission(true);
+	this->WireInterface->beginTransmission(i2cAddr_ltc2499);
+	this->WireInterface->write(0x80 | _BV(LTC2499_CONFIG1_ENABLE) | (0x1F & current2499Channel));
+	this->WireInterface->write(_BV(LTC2499_CONFIG2_ENABLE2) | (0x7F & current2499Config));
+	retval = this->WireInterface->endTransmission(true);
 	// Anything but zero means we couldn't initialize the LTC2499
 	if (0 != retval)
 	{
@@ -262,29 +276,29 @@ byte Ard2499::begin(byte ltc2499Address, byte eepromAddress, uint16_t referenceM
 	}
 
 	i2cAddr_eeprom = eepromAddress;
-	Wire.beginTransmission(i2cAddr_eeprom);
-	Wire.write(ARD2499_EEPROM_ADDR_EUI48);
-	retval = Wire.endTransmission(false);
+	this->WireInterface->beginTransmission(i2cAddr_eeprom);
+	this->WireInterface->write(ARD2499_EEPROM_ADDR_EUI48);
+	retval = this->WireInterface->endTransmission(false);
 	// Anything but zero means we couldn't initialize the LTC2499
 	if (0 != retval)
 	{
 		// Make sure we send a stop bit
-		Wire.endTransmission(true);
+		this->WireInterface->endTransmission(true);
 		i2cAddr_eeprom = 0;
 		init_status |= ARD2499_EEPROM_ERR;
 	}
 	else
 	{
 
-		Wire.requestFrom(i2cAddr_eeprom, (uint8_t)6, (uint8_t)true);
-		if (Wire.available() < 6)
+		this->WireInterface->requestFrom(i2cAddr_eeprom, (uint8_t)6, (uint8_t)true);
+		if (this->WireInterface->available() < 6)
 		{
 			i2cAddr_eeprom = 0;		
 			init_status |= ARD2499_EEPROM_ERR;
 		} else {
 			memset(eui48, 0, sizeof(eui48));
 			for(i=0; i<12; i+=2)
-				sprintf(&eui48[i], "%02X", Wire.read());
+				sprintf(&eui48[i], "%02X", this->WireInterface->read());
 		}
 	}	
 
@@ -301,21 +315,21 @@ byte Ard2499::eepromRead(int address, byte defaultOnError=0)
 	if (address > 0xFF)
 		return(defaultOnError);
 	
-	Wire.beginTransmission(i2cAddr_eeprom);
-	Wire.write((uint8_t)address);
-	retval = Wire.endTransmission(false);
+	this->WireInterface->beginTransmission(i2cAddr_eeprom);
+	this->WireInterface->write((uint8_t)address);
+	retval = this->WireInterface->endTransmission(false);
 	// Anything but zero means we couldn't initialize the LTC2499
 	if (0 != retval)
 	{
 		// Make sure we send a stop bit
-		Wire.endTransmission(true);
+		this->WireInterface->endTransmission(true);
 		return(0);
 	}
 
-	Wire.requestFrom((uint8_t)i2cAddr_eeprom, (uint8_t)1, (uint8_t)true);
-	if (Wire.available() < 1)
+	this->WireInterface->requestFrom((uint8_t)i2cAddr_eeprom, (uint8_t)1, (uint8_t)true);
+	if (this->WireInterface->available() < 1)
 		return(defaultOnError);
-	return(Wire.read());
+	return(this->WireInterface->read());
 }
 
 byte Ard2499::eepromWrite(int address, byte value, byte blocking=1)
@@ -329,10 +343,10 @@ byte Ard2499::eepromWrite(int address, byte value, byte blocking=1)
 	if (address > 0x7F)
 		return(ARD2499_EEPROM_ERR);
 		
-	Wire.beginTransmission(i2cAddr_eeprom);
-	Wire.write(address);
-	Wire.write(value);
-	retval = Wire.endTransmission(true);
+	this->WireInterface->beginTransmission(i2cAddr_eeprom);
+	this->WireInterface->write(address);
+	this->WireInterface->write(value);
+	retval = this->WireInterface->endTransmission(true);
 	// Anything but zero means we couldn't write to the LTC2499
 	if (0 != retval)
 	{
@@ -343,9 +357,9 @@ byte Ard2499::eepromWrite(int address, byte value, byte blocking=1)
 	{
 		while (0 != waitLoop--)
 		{
-			Wire.beginTransmission(i2cAddr_eeprom);
-			Wire.write(address);
-			if (0 == Wire.endTransmission(true))
+			this->WireInterface->beginTransmission(i2cAddr_eeprom);
+			this->WireInterface->write(address);
+			if (0 == this->WireInterface->endTransmission(true))
 				return(0);
 			delay(1);
 		}
