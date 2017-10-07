@@ -35,13 +35,23 @@ LICENSE:
 
 Ard2499 ard2499board1;
 
+TwoWire* WireInterface;
+
 byte confChan=0;
 
 void setup() {
   // initialize serial communications at 9600 bps:
   Serial.begin(9600);
   while(!Serial);
-  Wire.begin();
+
+#ifdef ARDUINO_SAM_DUE
+        WireInterface = &Wire1;
+#else 
+        WireInterface = &Wire;
+#endif
+  
+  WireInterface->begin();
+
   ard2499board1.begin(ARD2499_ADC_ADDR_ZZZ, ARD2499_EEP_ADDR_ZZ, VREF * 1000.0);
   ard2499board1.ltc2499ChangeConfiguration(LTC2499_CONFIG2_60_50HZ_REJ);
   ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_SINGLE_0P);
@@ -301,8 +311,8 @@ void findI2CSlave(uint8_t addr)
   byte stat, done = 0;
   while(!done)
   {
-    Wire.beginTransmission(addr);
-    stat = Wire.endTransmission();
+    WireInterface->beginTransmission(addr);
+    stat = WireInterface->endTransmission();
     if(!stat)
     {
       Serial.print("\a");
@@ -321,8 +331,8 @@ byte enumerateI2C(boolean showErrors)
  
   for(addr=0x00; addr<0x7F; addr++)
   {
-    Wire.beginTransmission(addr);
-    stat = Wire.endTransmission();
+    WireInterface->beginTransmission(addr);
+    stat = WireInterface->endTransmission();
     if(stat)
     {
       if(showErrors)
