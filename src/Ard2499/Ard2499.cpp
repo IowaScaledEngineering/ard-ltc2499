@@ -115,6 +115,18 @@ float Ard2499::ltc2499ReadVoltage()
 	return((value / 16777216.0) * (referenceMillivolts / 2000.0));
 }
 
+float Ard2499::ltc2499ReadVoltageAndChangeChannel(byte nextChannel)
+{
+	long value = ltc2499ReadAndChangeChannel(nextChannel);
+	
+	if (LTC2499_OVERRANGE_POSITIVE == value)
+		return(INFINITY);
+	if (LTC2499_OVERRANGE_NEGATIVE == value)
+		return(-1*INFINITY);
+
+	return((value / 16777216.0) * (referenceMillivolts / 2000.0));
+}
+
 long Ard2499::ltc2499ReadAndChangeChannel(byte nextChannel)
 {
 	if (ARD2499_SUCCESS != ltc2499ChangeChannel(nextChannel, false))

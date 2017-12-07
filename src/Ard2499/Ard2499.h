@@ -154,8 +154,9 @@ class Ard2499
 		byte eepromWrite(int address, byte value, byte blocking);
 
 		long ltc2499Read();
-		float ltc2499ReadVoltage();
 		long ltc2499ReadAndChangeChannel(byte nextChannel);
+		float ltc2499ReadVoltage();
+		float ltc2499ReadVoltageAndChangeChannel(byte nextChannel);
 
 		unsigned long ltc2499ReadRaw();
 		unsigned long ltc2499ReadRawAndChangeChannel(byte nextChannel);	
