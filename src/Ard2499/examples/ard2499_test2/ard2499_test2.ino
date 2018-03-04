@@ -264,6 +264,7 @@ void loop()
 	{
 		Serial.println("********************");
 		Serial.println(" PASSED!");
+		Serial.println("   INSTALL JUMPERS!");
 		Serial.println("********************");
 	}
 	Serial.print("\n");
