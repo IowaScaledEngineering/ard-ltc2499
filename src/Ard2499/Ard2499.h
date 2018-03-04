@@ -147,6 +147,8 @@ class Ard2499
 {
 	public:
 		Ard2499();
+		Ard2499(TwoWire& wire);
+
 		byte begin(byte ltc2499Address, byte eepromAddress, uint16_t referenceMillivolts = 4096);
 
 		const char* eui48Get();
@@ -173,6 +175,7 @@ class Ard2499
 		uint8_t current2499Config;
 		uint8_t current2499Channel;
 		uint16_t referenceMillivolts;
+		TwoWire* WireInterface;
 		char eui48[6*2+1];
 };
 
