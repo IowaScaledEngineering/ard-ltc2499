@@ -189,62 +189,55 @@ void loop()
 
 	Serial.print("ADC CH0-CH1:   ");
 	ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_DIFF_0P_1N);
-	voltage = ard2499board1.ltc2499ReadVoltage();
+	voltage = ard2499board1.ltc2499ReadVoltageAndChangeChannel(LTC2499_CHAN_DIFF_2P_3N);
 	Serial.print(voltage, 6);
 	Serial.print("V ... ");
 	result = ((voltage > (deltaV*0.999)) && (voltage < (deltaV*1.001)));
 	testResult(result);
 	
 	Serial.print("ADC CH2-CH3:   ");
-	ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_DIFF_2P_3N);
-	voltage = ard2499board1.ltc2499ReadVoltage();
+	voltage = ard2499board1.ltc2499ReadVoltageAndChangeChannel(LTC2499_CHAN_DIFF_4P_5N);
 	Serial.print(voltage, 6);
 	Serial.print("V ... ");
 	result = ((voltage > (deltaV*0.999)) && (voltage < (deltaV*1.001)));
 	testResult(result);
 	
 	Serial.print("ADC CH4-CH5:   ");
-	ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_DIFF_4P_5N);
-	voltage = ard2499board1.ltc2499ReadVoltage();
+	voltage = ard2499board1.ltc2499ReadVoltageAndChangeChannel(LTC2499_CHAN_DIFF_6P_7N);
 	Serial.print(voltage, 6);
 	Serial.print("V ... ");
 	result = ((voltage > (deltaV*0.999)) && (voltage < (deltaV*1.001)));
 	testResult(result);
 	
 	Serial.print("ADC CH6-CH7:   ");
-	ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_DIFF_6P_7N);
-	voltage = ard2499board1.ltc2499ReadVoltage();
+	voltage = ard2499board1.ltc2499ReadVoltageAndChangeChannel(LTC2499_CHAN_DIFF_8P_9N);
 	Serial.print(voltage, 6);
 	Serial.print("V ... ");
 	result = ((voltage > (deltaV*0.999)) && (voltage < (deltaV*1.001)));
 	testResult(result);
 	
 	Serial.print("ADC CH8-CH9:   ");
-	ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_DIFF_8P_9N);
-	voltage = ard2499board1.ltc2499ReadVoltage();
+	voltage = ard2499board1.ltc2499ReadVoltageAndChangeChannel(LTC2499_CHAN_DIFF_10P_11N);
 	Serial.print(voltage, 6);
 	Serial.print("V ... ");
 	result = ((voltage > (deltaV*0.999)) && (voltage < (deltaV*1.001)));
 	testResult(result);
 	
 	Serial.print("ADC CH10-CH11: ");
-	ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_DIFF_10P_11N);
-	voltage = ard2499board1.ltc2499ReadVoltage();
+	voltage = ard2499board1.ltc2499ReadVoltageAndChangeChannel(LTC2499_CHAN_DIFF_12P_13N);
 	Serial.print(voltage, 6);
 	Serial.print("V ... ");
 	result = ((voltage > (deltaV*0.999)) && (voltage < (deltaV*1.001)));
 	testResult(result);
 	
 	Serial.print("ADC CH12-CH13: ");
-	ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_DIFF_12P_13N);
-	voltage = ard2499board1.ltc2499ReadVoltage();
+	voltage = ard2499board1.ltc2499ReadVoltageAndChangeChannel(LTC2499_CHAN_DIFF_14P_15N);
 	Serial.print(voltage, 6);
 	Serial.print("V ... ");
 	result = ((voltage > (deltaV*0.999)) && (voltage < (deltaV*1.001)));
 	testResult(result);
 	
 	Serial.print("ADC CH14-CH15: ");
-	ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_DIFF_14P_15N);
 	voltage = ard2499board1.ltc2499ReadVoltage();
 	Serial.print(voltage, 6);
 	Serial.print("V ... ");
