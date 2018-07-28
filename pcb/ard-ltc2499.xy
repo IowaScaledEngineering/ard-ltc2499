@@ -1,0 +1,40 @@
+# PcbXY Version 1.0
+# Date: Wed 12 Oct 2016 07:44:50 PM GMT UTC
+# Author: Michael Petersen
+# Title: (unknown) - PCB X-Y
+# RefDes, Description, Value, X, Y, rotation, top/bottom
+# X,Y in in.  rotation in degrees.
+# --------------------------------------------
+J1,"ARDUINO_LEFT","unknown",0.10,0.91,0,top
+J2,"ARDUINO_RIGHT","unknown",2.00,1.08,180,top
+H1,"ARDUINO_SHIELD_HOLE","unknown",1.40,0.10,0,top
+H2,"ARDUINO_SHIELD_HOLE","unknown",2.00,2.10,0,top
+H3,"ARDUINO_SHIELD_HOLE","unknown",0.10,2.15,0,top
+H4,"ARDUINO_SHIELD_HOLE","unknown",0.30,0.10,0,top
+U4,"SOT26","unknown",1.62,1.61,270,top
+C6,"0805","1uF",0.54,1.02,180,top
+C5,"0805","10uF",0.35,0.95,270,top
+U3,"SOT89","unknown",0.51,0.85,270,top
+U1,"LTC_UHF38","unknown",1.00,1.60,270,top
+J5,"TERMBLK8_100MIL.fp","unknown",0.85,0.23,90,top
+J4,"TERMBLK8_100MIL.fp","unknown",0.44,2.47,270,top
+J3,"TERMBLK2_200MIL","unknown",1.07,2.47,180,top
+C1,"0805","10uF",0.35,1.15,90,top
+C2,"tantalum_a","22uF",1.22,1.35,0,top
+C3,"0805","0.1uF",1.21,1.24,0,top
+U2,"LTC_S6","unknown",1.21,1.10,180,top
+C4,"0805","1uF",1.21,0.97,0,top
+C7,"0805","0.1uF",1.76,1.61,90,top
+JP3,"JUMPER4-SMT","unknown",0.55,1.35,0,top
+R5,"0805","330",1.64,0.33,0,top
+JP6,"JUMPER4-SMT","unknown",1.68,0.65,270,top
+JP5,"JUMPER4-SMT","unknown",1.48,0.65,270,top
+JP4,"JUMPER4-SMT","unknown",1.28,0.65,270,top
+JP7_8,"JUMPER4-SMT","unknown",1.60,1.33,180,top
+R1,"RPACK4-1206","2k",1.40,2.40,180,top
+D1,"0805","unknown",1.45,0.33,0,top
+JP1,"JUMPER4-SMT","unknown",1.72,2.27,180,top
+U5,"LTC_MS8","unknown",1.60,1.93,180,top
+R2,"RPACK2-0606","2k",1.40,2.15,0,top
+JP2B,"SolderJumperSmall","unknown",1.48,1.79,270,bottom
+JP2A,"SolderJumperSmall","unknown",1.77,1.84,90,bottom
