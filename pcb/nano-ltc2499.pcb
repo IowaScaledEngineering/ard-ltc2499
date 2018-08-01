@@ -1172,7 +1172,6 @@ Element["onsolder" "JUMPER1" "TP1" "unknown" 1320.00mil 1675.00mil -55.00mil 45.
 	ElementLine [50.00mil 50.00mil -50.00mil 50.00mil 10.00mil]
 
 	)
-Rat[1320.00mil 1675.00mil 1 1375.00mil 2475.00mil 0  "via"]
 Layer(1 "component")
 (
 	Line[475.00mil 2385.00mil 230.00mil 2385.00mil 10.00mil 20.00mil "clearline"]
@@ -1403,6 +1402,10 @@ Layer(1 "component")
 	Polygon("clearpoly")
 	(
 		[1135.00mil 1130.00mil] [1235.00mil 1130.00mil] [1235.00mil 1245.00mil] [1135.00mil 1245.00mil] 
+	)
+	Polygon("")
+	(
+		[1265.00mil 1615.00mil] [1375.00mil 1615.00mil] [1375.00mil 1735.00mil] [1265.00mil 1735.00mil] 
 	)
 )
 Layer(2 "solder")
