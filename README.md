@@ -276,8 +276,8 @@ Returns:
 Ard2499::eui48Get() will return a character pointer to a constant, NULL-terminated string. The value will be either 12 characters of hexadecimal number, 
 or "Unknown" if the Ard2499::begin() failed to find the EEPROM. (Ard2499::begin() would have returned a value with the ARD2499_EEPROM_ERR bit set.)
 
-```byte Ard2499::eepromRead(int address)
-byte Ard2499::eepromRead(int address, byte defaultOnError)```
+```byte Ard2499::eepromRead(int address);
+byte Ard2499::eepromRead(int address, byte defaultOnError);```
 
 The Ard2499::eepromRead() function will retrieve a byte from the ARD-LTC2499's onboard EEPROM at the location specified by address. Valid values for address are 0x00-0x7F.
 
