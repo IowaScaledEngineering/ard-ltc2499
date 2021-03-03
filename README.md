@@ -29,7 +29,12 @@ is identical except that it also includes on-board level shifters for the I2C li
 * Arduino software library for easy use
 * 5V compatible I2C interface (or 3.3-5V with the ARD-LTC2499-3V3)
 
+
 ## Operation of the ARD-LTC2499 Hardware
+
+The latest schematics for both the ARD-LTC2499 and the ARD-LTC2499-3V3 can be found here:
+* [ARD-LTC2499 v1.3](https://github.com/IowaScaledEngineering/ard-ltc2499/raw/master/pg/ard-ltc2499-v1.3-83eb2df/ard-ltc2499.pdf)
+* [ARD-LTC2499-3V3 v1.3](https://github.com/IowaScaledEngineering/ard-ltc2499/raw/master/pg/ard-ltc2499-v1.3LS-ffd4822/ard-ltc2499.pdf)
 
 The Golden Rule:  When in doubt, check [the LTC2499
 datasheet](https://www.analog.com/media/en/technical-documentation/data-sheets/2499fe.pdf).  This guide is not
