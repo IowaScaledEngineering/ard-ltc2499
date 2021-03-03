@@ -2,7 +2,7 @@
 
 ## Summary
 
-The ARD-LTC2499 is an Arduino-compatible shield that contains a Linear Technology LTC2499 24-bit ADC
+The [ARD-LTC2499](https://www.iascaled.com/store/ARD-LTC2499) is an Arduino-compatible shield that contains a Linear Technology LTC2499 24-bit ADC
 coupled with an LT6654 precision voltage reference. It is capable of converting 16 single-ended channels,
 8 differential channels, or any other combination. In addition to measuring voltage, the ADC can interface
 directly to a variety of sensors including strain gauges, thermocouples, and current shunts. The onboard EEPROM
