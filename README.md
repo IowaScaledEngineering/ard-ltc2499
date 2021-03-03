@@ -283,8 +283,7 @@ The Ard2499::eepromRead() function will retrieve a byte from the ARD-LTC2499's o
 Optionally, the function can take a second argument - defaultOnError - of the value to be returned if the EEPROM is not initialized or is not accessible when the function 
 is called. If the defaultOnError parameter is omitted, it will default to returning 0x00 on failure.
 
-```byte Ard2499::eepromWrite(int address, byte value)
-byte Ard2499::eepromWrite(int address, byte value, byte blocking)```
+```byte Ard2499::eepromWrite(int address, byte value, byte blocking=1)```
 
 The Ard2499::eepromWrite() function will write a byte of value value to the ARD-LTC2499's onboard EEPROM at the location specified by address. Valid values for address are 
 0x00-0x7F, and value can be 0x00-0xFF.
