@@ -1890,7 +1890,7 @@
       (rotate (xyz 0 0 0))
     )
     (model ":ISE_3DModels:c-282834-8-c-3d.stp"
-      (offset (xyz 8.89 -3.175 0))
+      (offset (xyz 8.89 -3.175 2.9972))
       (scale (xyz 1 1 1))
       (rotate (xyz -90 0 0))
     )
@@ -2313,7 +2313,7 @@
       (rotate (xyz 0 0 0))
     )
     (model ":ISE_3DModels:c-282834-8-c-3d.stp"
-      (offset (xyz 8.89 -3.175 0))
+      (offset (xyz 8.89 -3.175 2.9972))
       (scale (xyz 1 1 1))
       (rotate (xyz -90 0 0))
     )
