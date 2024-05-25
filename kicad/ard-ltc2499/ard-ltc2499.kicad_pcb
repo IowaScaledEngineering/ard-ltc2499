@@ -5019,7 +5019,7 @@
   (gr_text "ON\n\n\nOFF" (at 160.401 123.698 90) (layer "F.SilkS") (tstamp 8d83e328-7f8e-4ff2-9f4c-9b7ab1a82636)
     (effects (font (size 1.016 1.016) (thickness 0.1524)) (justify right))
   )
-  (gr_text "ARD-LTC2499 v2.0\nIowa Scaled Engineering\nhttp://www.iascaled.com\nCC BT-SA ©2024" (at 121.158 85.598) (layer "F.SilkS") (tstamp 92ab8eca-6a10-4889-8904-a94ea7bd223b)
+  (gr_text "ARD-LTC2499 v2.0\nIowa Scaled Engineering\nhttp://www.iascaled.com\nCC BY-SA ©2024" (at 121.158 85.598) (layer "F.SilkS") (tstamp 92ab8eca-6a10-4889-8904-a94ea7bd223b)
     (effects (font (size 1.016 1.016) (thickness 0.1524)) (justify left))
   )
   (gr_text "A0\n\nA1\n\nA2\n\nA3\n\nA4\n\nA5" (at 124.333 121.285) (layer "F.SilkS") (tstamp 95c4dc27-e07d-4cac-9882-6532cdbd2cba)
