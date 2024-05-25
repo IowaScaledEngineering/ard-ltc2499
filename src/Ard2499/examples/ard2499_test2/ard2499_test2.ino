@@ -30,6 +30,14 @@ LICENSE:
 #define REG_PIN    2
 #define VREF_PIN   3
 
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
 Ard2499 ard2499board1;
 
 byte confChan=0;
@@ -249,16 +257,16 @@ void loop()
 	Serial.print("\n\n");
 	if(fail)
 	{
-		Serial.println("********************");
+		Serial.println(ANSI_COLOR_RED "********************");
 		Serial.println(" FAILED...");
-		Serial.println("********************");
+		Serial.println("********************" ANSI_COLOR_RESET);
 	}
 	else
 	{
-		Serial.println("********************");
+		Serial.println(ANSI_COLOR_GREEN "********************");
 		Serial.println(" PASSED!");
 		Serial.println("   INSTALL JUMPERS!");
-		Serial.println("********************");
+		Serial.println("********************" ANSI_COLOR_RESET);
 	}
 	Serial.print("\n");
 
@@ -273,11 +281,11 @@ void testResult(byte result)
 {
 	if(result)
 	{
-		Serial.println("Pass!");
+		Serial.println(ANSI_COLOR_GREEN "Pass!" ANSI_COLOR_RESET);
 	}
 	else
 	{
-		Serial.println("*** Fail ***");
+		Serial.println(ANSI_COLOR_RED "*** Fail ***" ANSI_COLOR_RESET);
 		fail = 1;
 	}
 }

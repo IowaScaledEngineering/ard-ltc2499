@@ -24,8 +24,8 @@ upload:
 	$(ARDUINO) --upload --board $(BOARD) $(BASE_NAME).ino
 
 terminal0:
-	miniterm.py /dev/ttyUSB0 115200
+	miniterm.py -D /dev/ttyUSB1 -c on
 
 terminal1:
-	miniterm.py /dev/ttyUSB1 115200
-
+#	minicom -D /dev/ttyUSB1 -c on
+	miniterm.py --filter=direct /dev/ttyUSB1 115200
