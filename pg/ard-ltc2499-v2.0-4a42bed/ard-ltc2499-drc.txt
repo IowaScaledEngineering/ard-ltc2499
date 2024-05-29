@@ -1,0 +1,10 @@
+** Drc report for /home/ndholmes/data/projects/ard-ltc2499/kicad/ard-ltc2499/ard-ltc2499.kicad_pcb **
+** Created on 2024-05-29 15:52:25 **
+
+** Found 0 DRC violations **
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **
