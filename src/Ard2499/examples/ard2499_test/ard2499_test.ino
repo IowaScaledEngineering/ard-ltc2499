@@ -39,7 +39,7 @@ byte confChan=0;
 
 void setup() {
   // initialize serial communications at 9600 bps:
-  Serial.begin(9600);
+  Serial.begin(115200);
   while(!Serial);
   Wire.begin();
   ard2499board1.begin(ARD2499_ADC_ADDR_ZZZ, ARD2499_EEP_ADDR_ZZ, VREF * 1000.0);
@@ -51,9 +51,11 @@ byte i=0;
 
 void loop() {
   byte retval = 0;
- 
+
+enumerateI2C(true);
 //  goto skipJumpers;
 
+/*
   Serial.print("Looking for 0x52 (JP7)... ");
   findI2CSlave(0x52);
 
@@ -63,26 +65,58 @@ void loop() {
   Serial.print("Looking for 0x53 (Open)... ");
   findI2CSlave(0x53);
 
-  Serial.print("Looking for 0x46 (JP4 Top)... ");
-  findI2CSlave(0x46);
-
   Serial.print("Looking for 0x44 (JP4 Bot)... ");
   findI2CSlave(0x44);
 
-  Serial.print("Looking for 0x54 (JP5 Top)... ");
-  findI2CSlave(0x54);
+  Serial.print("Looking for 0x46 (JP4 Top)... ");
+  findI2CSlave(0x46);
 
   Serial.print("Looking for 0x36 (JP5 Bot)... ");
   findI2CSlave(0x36);
 
-  Serial.print("Looking for 0x66 (JP6 Top)... ");
-  findI2CSlave(0x66);
+  Serial.print("Looking for 0x54 (JP5 Top)... ");
+  findI2CSlave(0x54);
 
   Serial.print("Looking for 0x24 (JP6 Bot)... ");
   findI2CSlave(0x24);
 
+  Serial.print("Looking for 0x66 (JP6 Top)... ");
+  findI2CSlave(0x66);
+
   Serial.print("Looking for 0x45 (Open)... ");
   findI2CSlave(0x45);
+*/
+
+  Serial.print("Looking for 0x50 (xxx)... ");
+  findI2CSlave(0x50);
+
+  Serial.print("Looking for 0x51 (A0)... ");
+  findI2CSlave(0x51);
+
+  Serial.print("Looking for 0x53 (A1)... ");
+  findI2CSlave(0x53);
+
+  Serial.print("Looking for 0x16 (CA0 L)... ");
+  findI2CSlave(0x16);
+
+  Serial.print("Looking for 0x15 (CA0 H)... ");
+  findI2CSlave(0x15);
+
+  Serial.print("Looking for 0x27 (CA1 L)... ");
+  findI2CSlave(0x27);
+
+  Serial.print("Looking for 0x24 (CA1 H)... ");
+  findI2CSlave(0x24);
+
+  Serial.print("Looking for 0x66 (CA2 L)... ");
+  findI2CSlave(0x66);
+
+  Serial.print("Looking for 0x45 (CA2 H)... ");
+  findI2CSlave(0x45);
+
+  ard2499board1.begin(ARD2499_ADC_ADDR_ZZZ, ARD2499_EEP_ADDR_ZZ, VREF * 1000.0);
+  ard2499board1.ltc2499ChangeConfiguration(LTC2499_CONFIG2_60_50HZ_REJ);
+  ard2499board1.ltc2499ChangeChannel(LTC2499_CHAN_SINGLE_0P);
 
   Serial.print("eeprom mac = [");
   Serial.print(ard2499board1.eui48Get());
@@ -291,6 +325,7 @@ skipJumpers:
         }
       } while(count < 1);
       
+      Serial.print("\a");
       Serial.println(" Done!");
     }
   }
