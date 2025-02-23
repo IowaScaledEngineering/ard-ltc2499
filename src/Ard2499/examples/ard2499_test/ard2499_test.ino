@@ -144,6 +144,8 @@ enumerateI2C(true);
   Serial.print(ard2499board1.eepromRead(0, true), HEX);
   Serial.print("\n");
 
+  delay(1000);
+
 skipJumpers:
 
   for(i=0; i<17; i++)
@@ -276,6 +278,7 @@ skipJumpers:
         if((-500 < adc) && (adc < 500))
         {
           count++;
+          Serial.print("\a");
           Serial.print("+");
         }
         else
@@ -345,7 +348,7 @@ void findI2CSlave(uint8_t addr)
       done = 1;
     }
   }
-  delay(1000);
+  delay(500);
 }
 
 byte enumerateI2C(boolean showErrors)
