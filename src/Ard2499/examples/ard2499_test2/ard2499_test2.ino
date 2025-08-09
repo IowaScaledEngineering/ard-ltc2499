@@ -101,44 +101,60 @@ void loop()
 		result = ((voltage > 4.05) && (voltage < 4.15));
 	testResult(result);
 
-	// EEPROM Address Test
-	Serial.println("\nEEPROM Address");
+	byte stat, foundEep = 0, foundAdc = 0;
+	Wire.beginTransmission(0x53);
+	foundEep = !Wire.endTransmission();
+	Wire.beginTransmission(0x45);
+	foundAdc = !Wire.endTransmission();
 
-	Serial.print("Looking for 0x50 (xxx)... ");
-	result = findI2CSlave(0x50);
-	testResult(result);
+	if(!foundEep || !foundAdc)
+	{
+		// EEPROM Address Test
+		Serial.println("\nEEPROM Address");
 
-	Serial.print("Looking for 0x51 (A0)... ");
-	result = findI2CSlave(0x51);
-	testResult(result);
+		Serial.print("Looking for 0x50 (xxx)... ");
+		result = findI2CSlave(0x50);
+		testResult(result);
 
-	Serial.print("Looking for 0x53 (A1)... ");
-	result = findI2CSlave(0x53);
-	testResult(result);
+		Serial.print("Looking for 0x51 (A0)... ");
+		result = findI2CSlave(0x51);
+		testResult(result);
 
-	Serial.print("Looking for 0x16 (CA0 L)... ");
-	result = findI2CSlave(0x16);
-	testResult(result);
+		Serial.print("Looking for 0x53 (A1)... ");
+		result = findI2CSlave(0x53);
+		testResult(result);
 
-	Serial.print("Looking for 0x15 (CA0 H)... ");
-	result = findI2CSlave(0x15);
-	testResult(result);
+		Serial.print("Looking for 0x16 (CA0 L)... ");
+		result = findI2CSlave(0x16);
+		testResult(result);
 
-	Serial.print("Looking for 0x27 (CA1 L)... ");
-	result = findI2CSlave(0x27);
-	testResult(result);
+		Serial.print("Looking for 0x15 (CA0 H)... ");
+		result = findI2CSlave(0x15);
+		testResult(result);
 
-	Serial.print("Looking for 0x24 (CA1 H)... ");
-	result = findI2CSlave(0x24);
-	testResult(result);
+		Serial.print("Looking for 0x27 (CA1 L)... ");
+		result = findI2CSlave(0x27);
+		testResult(result);
 
-	Serial.print("Looking for 0x66 (CA2 L)... ");
-	result = findI2CSlave(0x66);
-	testResult(result);
+		Serial.print("Looking for 0x24 (CA1 H)... ");
+		result = findI2CSlave(0x24);
+		testResult(result);
 
-	Serial.print("Looking for 0x45 (CA2 H)... ");
-	result = findI2CSlave(0x45);
-	testResult(result);
+		Serial.print("Looking for 0x66 (CA2 L)... ");
+		result = findI2CSlave(0x66);
+		testResult(result);
+
+		Serial.print("Looking for 0x45 (CA2 H)... ");
+		result = findI2CSlave(0x45);
+		testResult(result);
+	}
+	else
+	{
+		Serial.print("\n");
+		Serial.print(ANSI_COLOR_BLUE "Skipping address tests" ANSI_COLOR_RESET);
+		Serial.print("\n\n");
+		delay(200);
+	}
 
 	ard2499board1.begin(ARD2499_ADC_ADDR_ZZZ, ARD2499_EEP_ADDR_ZZ, VREF * 1000.0);
 	ard2499board1.ltc2499ChangeConfiguration(LTC2499_CONFIG2_60_50HZ_REJ);
@@ -260,7 +276,6 @@ skipJumpers:
 	{
 		Serial.println(ANSI_COLOR_GREEN "********************");
 		Serial.println(" PASSED!");
-		Serial.println("   INSTALL JUMPERS!");
 		Serial.println("********************" ANSI_COLOR_RESET);
 	}
 	Serial.print("\n");
