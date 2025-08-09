@@ -199,10 +199,10 @@
       (net 4 "GND") (pinfunction "Pin_7") (pintype "passive") (tstamp 4269684c-f806-4970-a1ed-a8974b6aa47e))
     (pad "8" thru_hole oval locked (at 17.78 0 270) (size 1.7272 2.032) (drill 1.016) (layers *.Cu *.Mask "F.SilkS")
       (net 5 "/Vin") (pinfunction "Pin_8") (pintype "passive") (tstamp bd870d2b-9ba8-41a3-8f3d-f0b044ead0fd))
-    (model "${KIPRJMOD}/Socket_Arduino_Uno.3dshapes/Socket_header_Arduino_1x08.wrl"
-      (offset (xyz 8.889999866 0 0))
+    (model "/home/ndholmes/data/projects/ise-kicad/3DModels/SSQ-108-04-T-S.stp"
+      (offset (xyz 8.89 0 0))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 180))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -246,10 +246,10 @@
       (net 45 "/A4") (pinfunction "Pin_5") (pintype "passive") (tstamp a824cc77-5f55-450b-8b01-0598e6500f17))
     (pad "6" thru_hole oval locked (at 12.7 0 270) (size 1.7272 2.032) (drill 1.016) (layers *.Cu *.Mask "F.SilkS")
       (net 46 "/A5") (pinfunction "Pin_6") (pintype "passive") (tstamp cc78793d-11b5-4607-9dc9-267a7fec2d8c))
-    (model "${KIPRJMOD}/Socket_Arduino_Uno.3dshapes/Socket_header_Arduino_1x06.wrl"
-      (offset (xyz 6.349999905 0 0))
+    (model "/home/ndholmes/data/projects/ise-kicad/3DModels/SSQ-106-04-T-S.stp"
+      (offset (xyz 6.35 0 0))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 180))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -298,10 +298,10 @@
       (net 13 "/9(**)") (pinfunction "Pin_9") (pintype "passive") (tstamp 704a63c9-f184-4f02-9e20-efc181b8c9b2))
     (pad "10" thru_hole oval locked (at 22.86 0 270) (size 1.7272 2.032) (drill 1.016) (layers *.Cu *.Mask "F.SilkS")
       (net 14 "/8") (pinfunction "Pin_10") (pintype "passive") (tstamp 03be20af-5199-4588-a92e-b78b36bf0215))
-    (model "${KIPRJMOD}/Socket_Arduino_Uno.3dshapes/Socket_header_Arduino_1x10.wrl"
-      (offset (xyz 11.42999983 0 0))
+    (model "/home/ndholmes/data/projects/ise-kicad/3DModels/SSQ-110-04-T-S.stp"
+      (offset (xyz 11.43 0 0))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 180))
+      (rotate (xyz -90 0 0))
     )
   )
 
@@ -349,10 +349,10 @@
       (net 21 "/1(Tx)") (pinfunction "Pin_7") (pintype "passive") (tstamp f92901aa-1c12-48ea-b6b0-35882120dfd7))
     (pad "8" thru_hole oval locked (at 17.78 0 270) (size 1.7272 2.032) (drill 1.016) (layers *.Cu *.Mask "F.SilkS")
       (net 22 "/0(Rx)") (pinfunction "Pin_8") (pintype "passive") (tstamp ede6fa69-b444-4cac-b914-fbbf5883953c))
-    (model "${KIPRJMOD}/Socket_Arduino_Uno.3dshapes/Socket_header_Arduino_1x08.wrl"
-      (offset (xyz 8.889999866 0 0))
+    (model "/home/ndholmes/data/projects/ise-kicad/3DModels/SSQ-108-04-T-S.stp"
+      (offset (xyz 8.89 0 0))
       (scale (xyz 1 1 1))
-      (rotate (xyz 0 0 180))
+      (rotate (xyz -90 0 0))
     )
   )
 
