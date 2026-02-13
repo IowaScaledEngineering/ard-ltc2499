@@ -10,7 +10,7 @@ BASE_NAME = ard2499_test2
 
 BOARD  = arduino:avr:uno
 
-ARDUINO = ~/arduino
+ARDUINO = arduino-cli
 
 help:
 	@echo "make verify..... Build $(BASE_NAME)"
@@ -21,11 +21,8 @@ verify:
 	$(ARDUINO) --verify --board $(BOARD) $(BASE_NAME).ino
 
 upload:
-	$(ARDUINO) --upload --board $(BOARD) $(BASE_NAME).ino
+	$(ARDUINO) compile -v -b $(BOARD) $(BASE_NAME).ino
+	$(ARDUINO) upload -v -b $(BOARD) -p /dev/ttyUSB2 $(BASE_NAME).ino
 
-terminal0:
-	miniterm.py -D /dev/ttyUSB1 -c on
-
-terminal1:
-#	minicom -D /dev/ttyUSB1 -c on
-	miniterm.py --filter=direct /dev/ttyUSB1 115200
+terminal:
+	miniterm.py --filter=direct /dev/ttyUSB2 115200
